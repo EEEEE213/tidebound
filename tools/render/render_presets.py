@@ -375,11 +375,18 @@ def bounds(blocks):
     return (min(xs), max(xs) + 1), (min(ys), max(ys) + 1), (min(zs), max(zs) + 1)
 
 
+WATER_Z = -2.55
+
+
 def main():
     with open(BLUEPRINTS) as f:
         data = json.load(f)
     stages, blocks = data["stages"], data["blocks"]
     final = [b[:5] for b in blocks if len(b) < 6]
+    global WATER_Z
+    WATER_Z = -9.0 if "galleon" in stages else -2.55  # design waterline (galleon: under the orlop floor)
+    pre = len(stages) - 2  # the last stage before the galleon frames the earlier stages
+    frame_pre = [b[:5] for b in blocks if b[3] <= pre and (len(b) < 6 or pre < b[5])]
     (x0, x1), (y0, y1), (z0, z1) = bounds(final)
     centre = Vector(((x0 + x1) / 2, -(z0 + z1) / 2, (y0 + y1) / 2))
     span = max(x1 - x0, y1 - y0, z1 - z0)
@@ -406,7 +413,7 @@ def main():
         # three-quarter view from the starboard bow, slightly above
         cam.location = centre + Vector((span * 1.1, span * 1.25, span * 0.85))
         look_at(cam, centre)
-        fit_ortho(cam, cam_data, final, 960 / 720)
+        fit_ortho(cam, cam_data, final if stage == "galleon" else frame_pre, 960 / 720)
         bpy.context.scene.render.filepath = os.path.join(OUT, f"{i:02d}_{stage}.png")
         bpy.ops.render.render(write_still=True)
         print("rendered", stage, flush=True)
@@ -433,10 +440,33 @@ def main():
         bpy.ops.render.render(write_still=True)
         print("rendered lower_deck", flush=True)
 
+    if not ONLY or "section" in ONLY or "all" in ONLY:
+        # side cutaway: the port half of the finished ship seen from starboard, showing every deck
+        clear()
+        cut = [b for b in final if b[0] <= 0]
+        build_ship(cut, "section")
+        bpy.ops.mesh.primitive_plane_add(size=span * 8, location=(centre.x, centre.y, y0 - 0.01))
+        bpy.context.object.is_shadow_catcher = True
+        setup_render(1920, 1080, transparent=True)
+        world_sky(0.7, (0.62, 0.72, 0.85, 1))
+        light("SUN", (0, 0, 20), (60, 0, 70), 2.6, 4, (1.0, 0.96, 0.9))
+        light("AREA", (centre.x + span, centre.y, centre.z + 10), (0, 80, 0), 1500, span)
+        cam_data = bpy.data.cameras.new("cam")
+        cam_data.type = "ORTHO"
+        cam = bpy.data.objects.new("cam", cam_data)
+        bpy.context.scene.collection.objects.link(cam)
+        bpy.context.scene.camera = cam
+        cam.location = centre + Vector((span * 1.5, -span * 0.25, span * 0.12))
+        look_at(cam, centre)
+        fit_ortho(cam, cam_data, cut, 1920 / 1080, 1.03)
+        bpy.context.scene.render.filepath = os.path.join(OUT, "section.png")
+        bpy.ops.render.render(write_still=True)
+        print("rendered section", flush=True)
+
     if not ONLY or "hero" in ONLY or "all" in ONLY:
         clear()
         build_ship([b[:5] for b in blocks if len(b) < 6], "hero")
-        bpy.ops.mesh.primitive_plane_add(size=6000, location=(centre.x, centre.y, -2.55))  # waterline measured in game: core 3.05 above
+        bpy.ops.mesh.primitive_plane_add(size=6000, location=(centre.x, centre.y, WATER_Z))
         water = bpy.context.object
         wm = bpy.data.materials.new("water")
         wm.use_nodes = True

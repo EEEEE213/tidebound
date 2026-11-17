@@ -183,6 +183,8 @@ lang = {
     "screen.tidebound.preview_with": "With %s",
     "screen.tidebound.preview_have": "%s (installed)",
     "screen.tidebound.preview_hover": "Hover an upgrade to preview it",
+    "upgrade.tidebound.galleon": "The Galleon",
+    "upgrade.tidebound.galleon.desc": "The final upgrade: rebuilds your ship as a 77-block, three-masted pirate galleon flying the Jolly Roger. Three decks: the main deck with 8 deck guns and the ship's boat, the gun deck with 30 cannons, crew bunks and the mess, and the orlop with the cargo hold, armory, strongroom and brig. Plus a captain's great cabin, officers' cabins, a chart room and a galley. Replaces the earlier premade parts; your own blocks, and any chest with items in it, stay.",
     "message.tidebound.aground": "The ship won't budge: it's aground and needs deeper water.",
     "message.tidebound.already_ship": "This core is already part of a ship",
     "message.tidebound.too_big": "That's too big to launch (max %s blocks)",

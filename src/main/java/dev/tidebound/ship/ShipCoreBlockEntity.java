@@ -32,10 +32,10 @@ public class ShipCoreBlockEntity extends BlockEntity implements BlockEntitySubLe
     /** Hull volume below the design waterline (premade hulls only), for the self-trimming buoyancy. */
     private double designCells;
 
-    /** Premade hulls float with the water below the lower deck floor: deck y = -3 sits just above it. */
-    public static final double DESIGN_WATERLINE = -4.0;
+    /** Premade hulls float with the water below their lowest deck's floor (relative to the ship's anchor). */
+    public static final double DESIGN_WATERLINE = -4.0, GALLEON_WATERLINE = -9.0;
     /** The most extra buoyancy a hull will find before it starts sitting lower (overloading still sinks you). */
-    public static final double MAX_BUOYANCY_SCALE = 3.0;
+    public static final double MAX_BUOYANCY_SCALE = 3.0, GALLEON_MAX_BUOYANCY_SCALE = 8.0;
     private int hullAge = 1000;
 
     // helm state (server only, not saved)
@@ -122,7 +122,7 @@ public class ShipCoreBlockEntity extends BlockEntity implements BlockEntitySubLe
     /** Hull cells (column envelope) below the design waterline, measured from the ship's anchor. */
     private double designVolume() {
         if (!has(ShipUpgrade.EXPANDED_HULL)) return 0;
-        double water = anchor().getY() + DESIGN_WATERLINE;
+        double water = anchor().getY() + (has(ShipUpgrade.GALLEON) ? GALLEON_WATERLINE : DESIGN_WATERLINE);
         double v = 0;
         for (int i = 1; i < hull.length; i += 3) v += Math.max(0, Math.min(1, water - (hull[i] - 0.5)));
         return v;
@@ -134,11 +134,21 @@ public class ShipCoreBlockEntity extends BlockEntity implements BlockEntitySubLe
      */
     public double buoyancyScale(double mass) {
         if (designCells <= 1) return 1;
-        return Math.max(1, Math.min(MAX_BUOYANCY_SCALE, mass / (ShipPhysics.WATER_DENSITY * designCells)));
+        double cap = has(ShipUpgrade.GALLEON) ? GALLEON_MAX_BUOYANCY_SCALE : MAX_BUOYANCY_SCALE;
+        return Math.max(1, Math.min(cap, mass / (ShipPhysics.WATER_DENSITY * designCells)));
+    }
+
+    /** Ticks left of the settle period after an upgrade (the physics body takes a moment to learn its new mass). */
+    private int settle;
+
+    /** 0 just after an upgrade was built, ramping back to 1 over about a second. */
+    public double settleFactor() {
+        return settle > 16 ? 0 : 1 - settle / 16.0;
     }
 
     public void markHullDirty() {
         hullAge = 1000;
+        settle = 20;
     }
 
     // ------------------------------------------------------------------ helm
@@ -210,6 +220,7 @@ public class ShipCoreBlockEntity extends BlockEntity implements BlockEntitySubLe
     @Override
     public void sable$tick(ServerSubLevel subLevel) {
         joinShip(subLevel);
+        if (settle > 0) settle--;
         if (++hullAge >= 40) {
             hullAge = 0;
             hull = ShipPhysics.scanHull(subLevel);

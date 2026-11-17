@@ -49,7 +49,11 @@ public enum ShipUpgrade {
     IRON_PROW("iron_prow", Set.of("expanded_hull"), 2, 1.0, 1.0, 1.3, false,
             List.of(cost(Items.IRON_INGOT, 16), cost(Items.IRON_BARS, 8), cost(Items.COBBLESTONE, 16), shards(2))),
     PADDLE_STEAMER("paddle_steamer", Set.of("keel", "cabin"), 8, 1.8, 1.2, 1.0, false,
-            List.of(cost(Items.IRON_INGOT, 32), cost(Items.COPPER_INGOT, 16), cost(Items.COBBLESTONE, 48), shards(4)));
+            List.of(cost(Items.IRON_INGOT, 32), cost(Items.COPPER_INGOT, 16), cost(Items.COBBLESTONE, 48), shards(4))),
+    /** The final upgrade: rebuilds the ship as a three-decked pirate galleon. */
+    GALLEON("galleon", Set.of("expanded_hull", "gunwales", "mainmast", "keel", "cabin", "crows_nest", "foremast", "iron_prow", "paddle_steamer"),
+            3, 1.2, 0.8, 1.5, false,
+            List.of(cost(ItemTags.PLANKS, 640, "Any planks"), cost(ItemTags.LOGS, 192, "Any logs"), cost(ItemTags.WOOL, 160, "Any wool"), shards(12)));
 
     public final String id;
     public final Set<String> requires;

@@ -103,6 +103,10 @@ public final class ShipBuilder {
         return SubLevelAssemblyHelper.assembleBlocks(level, anchor, blocks, bounds);
     }
 
+    private static boolean holdsItems(ServerLevel level, BlockPos p) {
+        return level.getBlockEntity(p) instanceof net.minecraft.world.Container c && !c.isEmpty();
+    }
+
     /** Water, bubble columns and sea-floor life never become part of a ship (or a launch drags the sea along). */
     public static boolean isSea(BlockState s) {
         return s.getBlock() instanceof net.minecraft.world.level.block.LiquidBlock || s.is(Blocks.BUBBLE_COLUMN)
@@ -177,13 +181,16 @@ public final class ShipBuilder {
             if (p.equals(corePos) || level.getBlockEntity(p) instanceof ShipCoreBlockEntity) continue;
             if (sub != null) sub.getPlot().expandIfNecessary(p);
             BlockState here = level.getBlockState(p);
-            boolean ours = here.equals(premade.get(p));
+            // premade and untouched: the same block the raft or an earlier upgrade put there (shape and
+            // connections may differ), and never a chest or barrel that still holds something
+            BlockState was = premade.get(p);
+            boolean ours = was != null && here.is(was.getBlock()) && !holdsItems(level, p);
             if (e.getValue().isAir()) {
                 if (ours) level.setBlock(p, Blocks.AIR.defaultBlockState(), Block.UPDATE_CLIENTS | Block.UPDATE_KNOWN_SHAPE);
                 continue;
             }
             if (!here.canBeReplaced() && !ours) continue;
-            if (ours && here.hasBlockEntity()) continue;
+            if (here.equals(e.getValue())) continue;
             level.setBlock(p, e.getValue(), Block.UPDATE_CLIENTS | Block.UPDATE_KNOWN_SHAPE);
             placed.add(p);
         }

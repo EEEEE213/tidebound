@@ -1,0 +1,63 @@
+newworld Galleon 4242
+wait 200
+cmd time set noon
+cmd tp @s 0 66 180
+fly
+look 180 80
+wait 100
+useitem
+wait 60
+aimcore
+corescreen
+wait 10
+click Install
+wait 30
+click Install
+wait 30
+click Install
+wait 30
+click Install
+wait 30
+click Install
+wait 30
+click Install
+wait 30
+click Install
+wait 30
+click Install
+wait 30
+click Install
+wait 30
+mouse 0.3 0.86
+wait 5
+shot gal_screen
+click Install
+wait 60
+close
+wait 300
+tpcore 48 22 -30 56 18
+fly
+wait 80
+log exterior
+shot gal_exterior
+tpcore -40 6 20 -125 4
+fly
+wait 60
+shot gal_side
+tpcore 0 4 18 180 8
+wait 40
+shot gal_quarterdeck
+tpcore 0 0 26 0 12
+wait 40
+shot gal_cabin
+tpcore -6 -4 -2 180 6
+wait 40
+log gundeck
+shot gal_gundeck
+tpcore 0 -8 1 180 8
+wait 40
+shot gal_orlop
+tpcore 0 0 -29 180 5
+wait 40
+shot gal_galley
+quit

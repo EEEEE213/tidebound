@@ -32,6 +32,8 @@ public final class ShipPhysics {
     static final double HEAVE_DAMPING = 1.6;
     /** Most upward push buoyancy may give, in multiples of the ship's weight (stops hulls being launched). */
     static final double MAX_LIFT = 1.6;
+    /** Whole-hull vertical damping (1/s). */
+    static final double HEAVE_GLOBAL = 1.5;
     static final double LATERAL_DAMPING = 1.4;
     /** Coasting deceleration along the keel, 1/s (about 4 s to lose 2/3 of the speed). */
     static final double FORWARD_DRAG = 0.25;
@@ -206,9 +208,22 @@ public final class ShipPhysics {
         double[] fracs = new double[cells.length / 3];
         Vector3d buoyForce = new Vector3d(), buoyTorque = new Vector3d();
 
+        // Find the water surface under the ship once; cells well above it can't be wet (big hulls have tens of
+        // thousands of cells, and most of a galleon's are above the waterline).
+        Vector3d comWorld = pose.transformPosition(new Vector3d(com), new Vector3d());
+        double skipAbove = Double.POSITIVE_INFINITY;
+        int cx = (int) Math.floor(comWorld.x), cz = (int) Math.floor(comWorld.z), cyTop = (int) Math.floor(comWorld.y) + 16;
+        for (int yy = cyTop; yy > cyTop - 80; yy--) {
+            double t = water.top(cx, yy, cz);
+            if (!Double.isNaN(t)) {
+                skipAbove = t + 2.0;
+                break;
+            }
+        }
         for (int i = 0; i < cells.length; i += 3) {
             world.set(cells[i], cells[i + 1], cells[i + 2]);
             pose.transformPosition(world, world);
+            if (world.y - 0.5 > skipAbove) continue;
             double frac = water.submerged(world.x, world.y, world.z);
             if (frac <= 0) continue;
             fracs[i / 3] = frac;
@@ -239,8 +254,14 @@ public final class ShipPhysics {
         double lift = buoyForce.length();
         double cap = MAX_LIFT * mass.getMass() * g;
         double k = lift > cap ? cap / lift : 1;
+        // Safety governor: buoyancy never pushes a ship that is already rising fast or spinning (no floating ship
+        // does either; it means the physics body hasn't caught up with a big change yet).
+        double vUpNow = v.dot(upLocal);
+        if (vUpNow > 3) k *= Math.max(0, 1 - (vUpNow - 3) / 3);
+        double spin = w.length();
+        double kt = spin > 1.5 ? k * Math.max(0, 1 - (spin - 1.5) / 1.5) : k;
         force.fma(k, buoyForce);
-        torque.fma(k, buoyTorque);
+        torque.fma(kt, buoyTorque);
 
         res.submergedCells = submerged;
         res.forwardSpeed = v.dot(fwd);
@@ -250,6 +271,9 @@ public final class ShipPhysics {
             double m = mass.getMass();
             // a hull with boosted buoyancy needs proportionally less of itself in the water to count as afloat
             double immersion = Math.min(1, submerged * core.buoyancyScale(m) / Math.max(1, cells.length / 3 * 0.15));
+
+            // heave damping on the whole hull, so strongly buoyant hulls settle instead of bobbing
+            force.fma(-m * HEAVE_GLOBAL * v.dot(upLocal) * immersion, upLocal);
 
             // water resistance along the keel
             double vF = res.forwardSpeed;
@@ -304,8 +328,9 @@ public final class ShipPhysics {
         }
 
         core.physics.applied(q.transform(new Vector3d(force)).mul(dt / mass.getMass()), vWorld);
-        force.mul(dt);
-        torque.mul(dt);
+        double settle = core.settleFactor();
+        force.mul(dt * settle);
+        torque.mul(dt * settle);
         handle.applyLinearAndAngularImpulse(force, torque, true);
         return res;
     }

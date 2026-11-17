@@ -27,7 +27,7 @@ SAIL = "minecraft:white_wool"
 RAIL = "minecraft:spruce_fence"
 LANTERN = "minecraft:lantern[hanging=false]"
 
-STAGES = ["raft", "expanded_hull", "gunwales", "mainmast", "keel", "cabin", "crows_nest", "foremast", "iron_prow", "paddle_steamer"]
+STAGES = ["raft", "expanded_hull", "gunwales", "mainmast", "keel", "cabin", "crows_nest", "foremast", "iron_prow", "paddle_steamer", "galleon"]
 bp = {s: {} for s in STAGES}
 cur = None
 
@@ -488,6 +488,25 @@ def paddle_steamer():
 for fn in (raft, expanded_hull, gunwales, mainmast, keel, cabin, crows_nest, foremast, iron_prow, paddle_steamer):
     fn()
 
+# the Galleon replaces every earlier premade block it doesn't reuse (the mod only does that while they're untouched)
+import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import galleon_design
+stage("galleon")
+galleon_design.build(put)
+before = {}
+for s_ in STAGES[:-1]:
+    before.update(bp[s_])
+before = {k: v for k, v in before.items() if v != "minecraft:air"}
+g = bp["galleon"]
+for k in list(g):
+    if g[k] == "minecraft:air" and k not in before:
+        del g[k]  # interior air where nothing was built: nothing to clear
+for k in before:
+    if k not in g and k != CORE:
+        g[k] = "minecraft:air"
+g.pop(CORE, None)
+
 # ---------------------------------------------------------------- connections (fences, panes, bars, walls)
 FULL = ("planks", "_log", "wool", "iron_block", "bricks", "furnace", "smoker", "barrel", "crafting_table", "cartography_table")
 
@@ -533,6 +552,7 @@ def connect(world):
 
 # ---------------------------------------------------------------- write
 os.makedirs(OUT, exist_ok=True)
+last_shaped = {}
 world, stage_of, retired = {}, {}, []
 for i, s in enumerate(STAGES):
     for k, v in bp[s].items():
@@ -540,6 +560,13 @@ for i, s in enumerate(STAGES):
             retired.append((k, world[k], stage_of[k], i))  # shown in earlier stages only
         world[k] = v
         stage_of[k] = i
+    snap = {k: v for k, v in world.items() if v != "minecraft:air"}
+    snap[CORE] = "tidebound:ship_core[facing=north]"
+    shaped_at = connect(snap)
+    for j, (k, st, s0, s1) in enumerate(retired):
+        if s1 == i and k in last_shaped:
+            retired[j] = (k, last_shaped[k], s0, s1)
+    last_shaped = shaped_at
 for s in STAGES:
     blocks = [[r, y, f, st] for (r, y, f), st in sorted(bp[s].items())]
     with open(os.path.join(OUT, s + ".json"), "w") as fh:

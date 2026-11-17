@@ -281,7 +281,7 @@ public final class AutoTest {
                 }
             }
             case "slot" -> mc.player.getInventory().selected = Integer.parseInt(arg);
-            case "log" -> LOG.info("[autotest] {} | pos {} | looking at {}", arg,
+            case "log" -> LOG.info("[autotest] {} | fps {} | pos {} | looking at {}", arg, mc.getFps(),
                     mc.player == null ? "-" : mc.player.position(), mc.hitResult == null ? "-" : mc.hitResult.getLocation());
             case "leave" -> {
                 if (mc.level != null) mc.level.disconnect();
