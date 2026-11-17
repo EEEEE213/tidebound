@@ -30,6 +30,8 @@ public final class ShipPhysics {
     /** Mass per fully submerged block of displaced water (Sable masses: wood 0.5, stone 1, iron 2). */
     public static final double WATER_DENSITY = 1.0;
     static final double HEAVE_DAMPING = 1.6;
+    /** Most upward push buoyancy may give, in multiples of the ship's weight (stops hulls being launched). */
+    static final double MAX_LIFT = 1.6;
     static final double LATERAL_DAMPING = 1.4;
     /** Coasting deceleration along the keel, 1/s (about 4 s to lose 2/3 of the speed). */
     static final double FORWARD_DRAG = 0.25;
@@ -198,10 +200,11 @@ public final class ShipPhysics {
         Vector3d r = new Vector3d();
         Vector3d pv = new Vector3d();
         Vector3d f = new Vector3d();
-        double buoyPerCell = WATER_DENSITY * g;
+        double buoyPerCell = WATER_DENSITY * g * core.buoyancyScale(mass.getMass());
         double submerged = 0;
         double cellMass = mass.getMass() / Math.max(1, cells.length / 3);
         double[] fracs = new double[cells.length / 3];
+        Vector3d buoyForce = new Vector3d(), buoyTorque = new Vector3d();
 
         for (int i = 0; i < cells.length; i += 3) {
             world.set(cells[i], cells[i + 1], cells[i + 2]);
@@ -212,8 +215,11 @@ public final class ShipPhysics {
             submerged += frac;
             r.set(cells[i] - com.x, cells[i + 1] - com.y, cells[i + 2] - com.z);
 
-            // buoyancy (straight up in world = against local gravity)
-            f.set(upLocal).mul(buoyPerCell * frac);
+            // buoyancy (straight up in world = against local gravity), summed apart so it can be capped below
+            Vector3d bf = new Vector3d(upLocal).mul(buoyPerCell * frac);
+            buoyForce.add(bf);
+            buoyTorque.add(new Vector3d(r).cross(bf));
+            f.set(0, 0, 0);
 
             // drag on the point velocity, split into heave / lateral / forward
             w.cross(r, pv).add(v);
@@ -228,13 +234,22 @@ public final class ShipPhysics {
             torque.add(new Vector3d(r).cross(f));
         }
 
+        // A hull that suddenly finds itself deep (a big upgrade built around it in one go) would otherwise be
+        // flung out of the water: never push up harder than MAX_LIFT times the ship's weight.
+        double lift = buoyForce.length();
+        double cap = MAX_LIFT * mass.getMass() * g;
+        double k = lift > cap ? cap / lift : 1;
+        force.fma(k, buoyForce);
+        torque.fma(k, buoyTorque);
+
         res.submergedCells = submerged;
         res.forwardSpeed = v.dot(fwd);
 
         if (submerged > 0) {
             ShipStats stats = core.stats();
             double m = mass.getMass();
-            double immersion = Math.min(1, submerged / Math.max(1, cells.length / 3 * 0.15));
+            // a hull with boosted buoyancy needs proportionally less of itself in the water to count as afloat
+            double immersion = Math.min(1, submerged * core.buoyancyScale(m) / Math.max(1, cells.length / 3 * 0.15));
 
             // water resistance along the keel
             double vF = res.forwardSpeed;

@@ -149,7 +149,7 @@ public final class TideboundGameTests {
             if (t[0] == 460) {
                 double coreAbove = at.y - surface;
                 report.append(String.format("upgraded ship: core %.2f above water, tilt %.1f, speed %.2f; ", coreAbove, tilt, c.lastForwardSpeed));
-                if (coreAbove < -0.2 || coreAbove > 3.5) h.fail("upgraded ship floats wrong: " + coreAbove);
+                if (coreAbove < -0.2 || coreAbove > 6.0) h.fail("upgraded ship floats wrong: " + coreAbove);
                 start[0] = at;
             }
             // phase 4 (460-620): the full ship, 8 s ahead (top speed 26 b/s)
@@ -425,5 +425,49 @@ public final class TideboundGameTests {
         if (sea > 0) h.fail("the ship took " + sea + " sea blocks with it");
         else if (blocks != 26) h.fail("expected 25 planks + core, got " + blocks);
         else h.succeed();
+    }
+
+    /** After every upgrade the lower deck floor must stay above the water (heavy upgrades used to sink it). */
+    @GameTest(template = "empty", timeoutTicks = 2400)
+    public static void lowerDeckStaysDry(GameTestHelper h) {
+        ServerLevel level = h.getLevel();
+        BlockPos top = pool(level, 82 * 96, 110, 200);
+        double surface = top.getY() + 1.0;
+        ServerSubLevel ship = ShipBuilder.launchRaft(level, top.above().south(60), Direction.SOUTH, new ArrayList<>());
+        if (ship == null) {
+            h.fail("no raft");
+            return;
+        }
+        ShipCoreBlockEntity[] core = {null};
+        int[] t = {0};
+        StringBuilder report = new StringBuilder();
+        double[] worst = {99};
+        h.onEachTick(() -> {
+            t[0]++;
+            if (core[0] == null) {
+                for (var be : ship.getPlot().getBlockEntityActors()) if (be instanceof ShipCoreBlockEntity c) core[0] = c;
+                return;
+            }
+            ShipCoreBlockEntity c = core[0];
+            int step = t[0] / 200, phase = t[0] % 200;
+            ShipUpgrade[] all = ShipUpgrade.values();
+            if (phase == 0 && step >= 1 && step <= all.length) {
+                ShipBuilder.buildUpgrade(level, c, all[step - 1]);
+                c.install(all[step - 1]);
+            }
+            if (phase == 199 && step >= 1 && step <= all.length) {
+                // the floor's top is 3.5 blocks below the core's centre
+                double coreAbove = ShipBuilder.worldCenter(level, c.getBlockPos()).y - surface;
+                double floorClear = coreAbove - 3.5;
+                double mass = ship.getMassTracker().getMass();
+                report.append(String.format("%s: floor %.2f above water (mass %.0f, buoyancy x%.2f); ", all[step - 1].id, floorClear, mass, c.buoyancyScale(mass)));
+                worst[0] = Math.min(worst[0], floorClear);
+            }
+            if (t[0] == 200 * (ShipUpgrade.values().length + 1)) {
+                LOG.info("[tidebound-test] DRY {}", report);
+                if (worst[0] < 0.3) h.fail("lower deck floods: floor only " + worst[0] + " above water");
+                else h.succeed();
+            }
+        });
     }
 }

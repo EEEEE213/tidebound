@@ -29,6 +29,13 @@ public class ShipCoreBlockEntity extends BlockEntity implements BlockEntitySubLe
     private final Set<String> upgrades = new LinkedHashSet<>();
     private ShipStats stats = ShipStats.of(Set.of());
     private double[] hull = new double[0];
+    /** Hull volume below the design waterline (premade hulls only), for the self-trimming buoyancy. */
+    private double designCells;
+
+    /** Premade hulls float with the water below the lower deck floor: deck y = -3 sits just above it. */
+    public static final double DESIGN_WATERLINE = -4.0;
+    /** The most extra buoyancy a hull will find before it starts sitting lower (overloading still sinks you). */
+    public static final double MAX_BUOYANCY_SCALE = 3.0;
     private int hullAge = 1000;
 
     // helm state (server only, not saved)
@@ -112,6 +119,24 @@ public class ShipCoreBlockEntity extends BlockEntity implements BlockEntitySubLe
         return hull;
     }
 
+    /** Hull cells (column envelope) below the design waterline, measured from the ship's anchor. */
+    private double designVolume() {
+        if (!has(ShipUpgrade.EXPANDED_HULL)) return 0;
+        double water = anchor().getY() + DESIGN_WATERLINE;
+        double v = 0;
+        for (int i = 1; i < hull.length; i += 3) v += Math.max(0, Math.min(1, water - (hull[i] - 0.5)));
+        return v;
+    }
+
+    /**
+     * How much stronger than plain water a premade hull's buoyancy is: just enough to hold the design waterline
+     * whatever the upgrades and cargo weigh (never less than 1, at most {@link #MAX_BUOYANCY_SCALE}).
+     */
+    public double buoyancyScale(double mass) {
+        if (designCells <= 1) return 1;
+        return Math.max(1, Math.min(MAX_BUOYANCY_SCALE, mass / (ShipPhysics.WATER_DENSITY * designCells)));
+    }
+
     public void markHullDirty() {
         hullAge = 1000;
     }
@@ -188,6 +213,7 @@ public class ShipCoreBlockEntity extends BlockEntity implements BlockEntitySubLe
         if (++hullAge >= 40) {
             hullAge = 0;
             hull = ShipPhysics.scanHull(subLevel);
+            designCells = designVolume();
         }
         if (pilot != null && !inputFresh()) {
             pilot = null;
@@ -198,7 +224,10 @@ public class ShipCoreBlockEntity extends BlockEntity implements BlockEntitySubLe
     @Override
     public void sable$physicsTick(ServerSubLevel subLevel, RigidBodyHandle handle, double timeStep) {
         if (ship == null || !isHelm) return; // only the helm floats and drives the ship
-        if (hull.length == 0) hull = ShipPhysics.scanHull(subLevel);
+        if (hull.length == 0) {
+            hull = ShipPhysics.scanHull(subLevel);
+            designCells = designVolume();
+        }
         ShipPhysics.Result r = ShipPhysics.tick(this, subLevel, handle, timeStep);
         lastForwardSpeed = r.forwardSpeed;
         lastSubmerged = r.submergedCells;
