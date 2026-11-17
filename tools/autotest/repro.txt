@@ -1,0 +1,29 @@
+newworld Repro8 7531640484419814397
+wait 200
+cmd time set noon
+cmd tp @s 0 66 180
+fly
+look 180 80
+wait 100
+useitem
+wait 60
+
+
+look 180 20
+wait 20
+aimcore
+corescreen
+wait 10
+click Take the Helm
+wait 10
+shipinfo start
+look 180 20
+hold forward 200
+shipinfo mid
+hold forward 300
+shipinfo after
+hold forward 60
+shipinfo end
+shot fix_aground
+hold sneak 5
+quit

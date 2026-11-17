@@ -1,0 +1,81 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.148'
+}
+
+version = mod_version
+group = mod_group_id
+
+base {
+    archivesName = mod_id
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+neoForge {
+    version = project.neo_version
+
+    runs {
+        // Headless tests: worldgen layout, boat buoyancy/steering, island boss flow, upgrades.
+        gameTestServer {
+            type = "gameTestServer"
+            gameDirectory = project.file('run')
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'tidebound'
+        }
+        client {
+            client()
+            gameDirectory = project.file(findProperty('tbRunDir') ?: 'run')
+            if (findProperty('tbUser')) {
+                programArguments.addAll('--username', findProperty('tbUser'))
+            }
+            // Scripted, hidden-window, muted test client (dev only): -PtbAutotest=<script>
+            if (findProperty('tbAutotest')) {
+                systemProperty 'tidebound.autotest', findProperty('tbAutotest')
+                jvmArguments.add('-javaagent:C:/exo-tmp/out/hidewindow.jar')
+                programArguments.addAll('--width', '1280', '--height', '720')
+            }
+        }
+        server {
+            server()
+            gameDirectory = project.file('run-server')
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
+        }
+    }
+}
+
+dependencies {
+    // Compiled against the exact Sable jars from the "Mech" CurseForge instance.
+    // At dev runtime Sable is loaded from run/mods instead (so its jar-in-jar libs work).
+    compileOnly fileTree(dir: 'libs', include: '*.jar')
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+var generateModMetadata = tasks.register('generateModMetadata', ProcessResources) {
+    var replaceProperties = [
+        minecraft_version: minecraft_version,
+        neo_version      : neo_version,
+        mod_id           : mod_id,
+        mod_name         : mod_name,
+        mod_version      : mod_version,
+    ]
+    inputs.properties replaceProperties
+    expand replaceProperties
+    from 'src/main/templates'
+    into 'build/generated/sources/modMetadata'
+}
+sourceSets.main.resources.srcDir generateModMetadata
+neoForge.ideSyncTask generateModMetadata
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}

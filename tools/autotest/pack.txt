@@ -1,0 +1,43 @@
+newworld PackTest 4242
+wait 200
+cmd give @s aeronautics:propeller_bearing
+cmd time set noon
+cmd tp @s 0 66 180
+fly
+look 180 80
+wait 100
+useitem
+wait 60
+look 180 20
+wait 20
+shot pack_raft
+corescreen
+wait 10
+click Take the Helm
+wait 10
+hold forward 120
+shot pack_sailing
+hold sneak 5
+close
+cmd gamemode creative
+cmd tp @s 75 56 0 90 10
+wait 50
+shot depth_07
+cmd tp @s 85 46 0 90 15
+wait 60
+shot depth_17
+cmd tp @s 95 38 0 90 20
+wait 60
+shot depth_25a
+wait 5
+shot depth_25b
+wait 9
+shot depth_25c
+wait 17
+shot depth_25d
+cmd effect give @s conduit_power 60
+wait 40
+shot depth_25_conduit
+log pack-ok
+wait 20
+quit

@@ -1,0 +1,17 @@
+newworld Preview3 4242
+wait 200
+cmd time set noon
+cmd tp @s 0 66 180
+fly
+look 180 80
+wait 100
+useitem
+wait 60
+aimcore
+corescreen
+wait 10
+shot preview_idle
+mouse 0.3 0.83
+wait 5
+shot preview_hover
+quit

@@ -1,0 +1,25 @@
+# core
+sable
+create
+create-aeronautics
+create-big-cannons          # naval guns
+create-propulsion-simulated
+# exploration / info
+xaeros-minimap
+xaeros-world-map
+jei
+jade
+appleskin
+# life at sea
+farmers-delight
+aquaculture
+supplementaries
+comforts                    # hammocks and sleeping bags
+# performance
+sodium
+modernfix
+ferrite-core
+entityculling
+immediatelyfast
+# multiplayer: host your world for friends (client-side)
+essential

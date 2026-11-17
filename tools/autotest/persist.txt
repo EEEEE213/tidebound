@@ -1,0 +1,50 @@
+# a ship with upgrades survives save and reload, still afloat, still upgraded, still sails
+newworld tidebound_persist 99
+wait 300
+cmd gamerule doDaylightCycle false
+cmd time set 1000
+cmd weather clear
+fly
+cmd tp @s 0 66 180
+look 180 80
+wait 80
+useitem
+wait 20
+cmd gamemode survival
+wait 60
+look 0 50
+wait 5
+corescreen
+wait 5
+cmd gamemode creative
+wait 5
+click Install
+wait 10
+click Install
+wait 10
+click Install
+wait 10
+close
+look 0 15
+wait 40
+shot 20_before_reload
+log before reload
+leave
+openworld tidebound_persist
+wait 60
+log after reload
+look 0 15
+wait 20
+shot 21_after_reload
+look 0 50
+wait 5
+corescreen
+wait 10
+shot 22_core_after_reload
+click Take the Helm
+wait 10
+look 180 10
+hold forward 100
+log after sailing again
+shot 23_sailing_after_reload
+quit

@@ -1,0 +1,89 @@
+# upgrades bought through the Ship Core screen with real materials, own blocks on the ship, a guardian fight
+newworld tidebound_islands 777
+wait 300
+cmd gamerule doDaylightCycle false
+cmd time set 1000
+cmd weather clear
+cmd gamerule doMobSpawning false
+cmd give @s oak_planks 256
+cmd give @s spruce_log 128
+cmd give @s white_wool 64
+cmd give @s stick 32
+cmd give @s iron_ingot 64
+cmd give @s glass 16
+cmd give @s tidebound:tide_shard 8
+cmd give @s cobblestone 64
+fly
+cmd tp @s 0 66 180
+look 180 80
+wait 80
+useitem
+wait 20
+cmd gamemode survival
+wait 60
+look 0 50
+wait 5
+corescreen
+wait 5
+shot 10_core_screen_with_materials
+click Install
+wait 10
+click Install
+wait 10
+click Install
+wait 10
+click Install
+wait 10
+click Install
+wait 10
+click Install
+wait 10
+shot 11_after_buying
+close
+cmd tidebound island
+cmd clear @s tidebound:tide_shard 0
+wait 40
+slot 8
+cmd item replace entity @s hotbar.8 with cobblestone 16
+look 90 60
+wait 5
+useon
+wait 5
+log placed block on ship
+cmd gamemode creative
+fly
+cmd tp @s 14 80 196
+look 135 35
+wait 100
+shot 12_upgraded_ship
+cmd gamemode survival
+cmd tidebound goto
+cmd effect give @s resistance 99999 4 true
+cmd effect give @s regeneration 99999 2 true
+wait 20
+tpisland 2 -20
+wait 30
+look 0 90
+wait 5
+block before-dig
+hold attack 60
+block after-dig-protected
+wait 60
+cmd tidebound island
+faceboss
+wait 5
+shot 13_guardian
+wait 100
+faceboss
+shot 14_guardian_fight
+cmd kill @e[tag=tidebound_boss]
+wait 30
+shot 15_island_freed
+cmd tidebound island
+look 0 90
+wait 5
+block before-dig-freed
+hold attack 60
+block after-dig-freed
+wait 20
+quit

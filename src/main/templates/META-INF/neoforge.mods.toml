@@ -1,0 +1,32 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+license = "All Rights Reserved"
+
+[[mods]]
+modId = "${mod_id}"
+version = "${mod_version}"
+displayName = "${mod_name}"
+description = '''An endless ocean world of far-flung islands.
+Every island is guarded by a miniboss - defeat it to loot the island.
+Sail between them on a physics ship (Sable) you can build on, and grow it with premade upgrades at the Ship Core.'''
+
+[[dependencies."${mod_id}"]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies."${mod_id}"]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.1,1.22)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies."${mod_id}"]]
+modId = "sable"
+type = "required"
+versionRange = "[2.0,3.0)"
+ordering = "AFTER"
+side = "BOTH"

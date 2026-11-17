@@ -1,0 +1,5 @@
+newworld EssTest 4242
+wait 200
+shot ess_world
+log essential-ok
+quit

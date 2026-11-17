@@ -1,0 +1,1096 @@
+[
+ {
+  "slug": "sable",
+  "title": "Sable",
+  "client": "required",
+  "server": "required",
+  "version": {
+   "game_versions": [
+    "1.21.1"
+   ],
+   "loaders": [
+    "neoforge"
+   ],
+   "environment": "client_and_server",
+   "id": "fg9dTRz9",
+   "project_id": "T9PomCSv",
+   "author_id": "vt2QVvWe",
+   "featured": false,
+   "name": "Sable NeoForge 2.0.6 for mc1.21.1",
+   "version_number": "2.0.6+mc1.21.1",
+   "changelog": "- Fix an issue where Sable broke entities standing on fluids (like Striders)\n- Tweak some Sable fabric networking mixins to hopefully fix it up a bit",
+   "changelog_url": null,
+   "date_published": "2026-10-03T04:17:59.727160Z",
+   "downloads": 459997,
+   "version_type": "release",
+   "status": "listed",
+   "requested_status": null,
+   "files": [
+    {
+     "id": "oCoLBnBu",
+     "hashes": {
+      "sha512": "76d293ce751a01cb9c095a3659b0a41e03e005480bc9d76dfdc73ec7c2eabf7923740c7b077921d42616673c496cd5143569f2085ddcebe174fd91d81e2a04b8",
+      "sha1": "cf46f7e8c1511f170abcdbee739944f0540549bf"
+     },
+     "url": "https://cdn.modrinth.com/data/T9PomCSv/versions/fg9dTRz9/sable-neoforge-1.21.1-2.0.6.jar",
+     "filename": "sable-neoforge-1.21.1-2.0.6.jar",
+     "primary": true,
+     "size": 12986135,
+     "file_type": null
+    }
+   ],
+   "dependencies": [
+    {
+     "version_id": null,
+     "project_id": "3KUWeVhG",
+     "file_name": null,
+     "dependency_type": "embedded"
+    },
+    {
+     "version_id": null,
+     "project_id": "qy8EtCnG",
+     "file_name": null,
+     "dependency_type": "optional"
+    },
+    {
+     "version_id": null,
+     "project_id": "LNytGWDc",
+     "file_name": null,
+     "dependency_type": "optional"
+    }
+   ]
+  }
+ },
+ {
+  "slug": "create",
+  "title": "Create",
+  "client": "optional",
+  "server": "required",
+  "version": {
+   "game_versions": [
+    "1.21.1"
+   ],
+   "loaders": [
+    "neoforge"
+   ],
+   "environment": "client_and_server",
+   "id": "UjX6dr61",
+   "project_id": "LNytGWDc",
+   "author_id": "Ud4jzpdg",
+   "featured": false,
+   "name": "Create 6.0.10 for mc1.21.1",
+   "version_number": "6.0.10+mc1.21.1",
+   "changelog": "Create 6.0.10:\n\n\n#### Gameplay Changes\n\n- Improve Recipe Viewer Sync in Stock Keepers and Allow selecting from 4 different modes:\n    - Disabled\n    - Sync only from Recipe Viewers\n    - Sync only to Recipe Viewers\n    - Sync from and to Recipe Viewers\n- Add keybinds for ctrl, shift and alt modifiers #10187\n\n#### Optimizations\n\n- Further optimize contraption collision\n- Optimize GlobalRailwayManager#playerLogin\n\n#### Bug Fixes\n\n- Fix warnings being logged for missing classes that create has mixins into\n- Fix backtanks not having the enchantment glint when worn #9792\n- Fix spouts not stopping items when filling them when the spout is also actively being filled #9621\n- Fix stock links on same storage (for example double chests) reporting the item amounts twice #9627\n- Fix older flywheel being loaded when a mod like vanillin is installed\n- Fix turntables not rotating players smoothly #8160\n- Fix rare crash with COntraptionSeatMappingPacket #7919\n- Fix tanks not updating correctly in specific cases #8535\n- Fix steam engines not filling with water if expanded after engines have been placed already #9342\n- Fix enchanted items disappearing in contraption storages #9788\n- Fix adjustable chain gearshifts causing a crash in specific setups #9046\n- Fix postbox duplication if someone breaks it while it is still being accessed #8759\n- Fix tools with efficiency not being faster when used in deployers #9615\n- Fix waxed copper tiles and shingles not having the correct stonecutting recipes #9510\n- Fix crash when a CC: Tweaked computer is attached to a train station #9843\n- Limit the maxAssemblyLength to 512 and maxBogeyCount to 200 to prevent issues such as #9626\n- Fix VirtualRenderWorld not marking block entities as removed #9821\n- Fix rendered items in stockkeeper screens not having the correct count on the item itself #9403\n- Fix dough being tagged incorrectly #9831\n- Fix players using lectern controllers with their feet height rather than their eye height #9922\n- Fix the count of filtering behaviours being set to 1 when the item has been removed #9777\n- Fix schedules not stacking after copy #9886\n- Fix mechanical mixers that are mixing at a slower than required speed still playing an animation and continuing to mix #6249\n- Fix threshold switches detecting the wrong amount of items for chutes, smart chutes #9488\n- Fix basins not spawning fluid particles #9808\n- Fix exception in displaylink computercraft-api, when setting the cursor position to negative value #9984\n- Fix ItemStackMixin trying to migrate clipboard components on all item stacks\n- Fix fluid crashes by ensuring cache is only called when valid #10016\n- Fix harvesters harvesting vanilla mushrooms on rich soil #9940\n- Fix rendering jitter when walking ontop of belts and depots #9931\n- Fix items disappearing during belt transfers when chunks unload #9882\n- Fix outdated environmental compat #4710 #7301\n- Fix hand crank rotation visuals #8828\n- Fix outdated BWG/Silent Gems compat #9500\n- Fix placed clipboards causing a crash when you are too far away from the block #10185\n- Fix multiple create blocks and entities not respecting block and entity reach attributes\n\n#### API Changes\n\n- Add seats tags #9907\n- Add Plough blacklist and whitelist tags #7162\n",
+   "changelog_url": null,
+   "date_published": "2026-04-21T22:20:03.579201Z",
+   "downloads": 5951747,
+   "version_type": "release",
+   "status": "listed",
+   "requested_status": null,
+   "files": [
+    {
+     "id": "V876RuGl",
+     "hashes": {
+      "sha512": "11cc8fc049d2f67f6548c7abfada6b82a3adb5c7ca410a742de04bbca76e03862c518721b88d806f6e6d768a4d68531fdb903a85859b25d1484d550cc7bafd4b",
+      "sha1": "0e97e49837bed766e6f28a4c95b04885d6acc353"
+     },
+     "url": "https://cdn.modrinth.com/data/LNytGWDc/versions/UjX6dr61/create-1.21.1-6.0.10.jar",
+     "filename": "create-1.21.1-6.0.10.jar",
+     "primary": true,
+     "size": 19123767,
+     "file_type": null
+    }
+   ],
+   "dependencies": []
+  }
+ },
+ {
+  "slug": "create-aeronautics",
+  "title": "Create Aeronautics",
+  "client": "required",
+  "server": "required",
+  "version": {
+   "game_versions": [
+    "1.21.1"
+   ],
+   "loaders": [
+    "neoforge"
+   ],
+   "environment": "client_and_server",
+   "id": "44pLdPGg",
+   "project_id": "oWaK0Q19",
+   "author_id": "vt2QVvWe",
+   "featured": false,
+   "name": "Create Aeronautics 1.3.2 for mc1.21.1",
+   "version_number": "1.3.2+mc1.21.1",
+   "changelog": "- Fix issues with JEI integration and creative tab compatibility with mods (PR #1403)\n- Fix swivel bearing not adjusting its mass when assembled properly",
+   "changelog_url": null,
+   "date_published": "2026-08-29T18:45:12.190765Z",
+   "downloads": 1344207,
+   "version_type": "release",
+   "status": "listed",
+   "requested_status": null,
+   "files": [
+    {
+     "id": "oxmlmunn",
+     "hashes": {
+      "sha512": "dc7e8e1148fa442243889ba29412207137e1bb86206e6c92bc0a589f1374a466e93de22bdbf14f753984d86c29308fbbdc0f14a4b9618b14c0ac1666a36b46f5",
+      "sha1": "ddbe9cbc25e8f663218aa1e9fdfc4b99f0e11e4b"
+     },
+     "url": "https://cdn.modrinth.com/data/oWaK0Q19/versions/44pLdPGg/create-aeronautics-bundled-1.21.1-1.3.2.jar",
+     "filename": "create-aeronautics-bundled-1.21.1-1.3.2.jar",
+     "primary": true,
+     "size": 33123131,
+     "file_type": null
+    }
+   ],
+   "dependencies": [
+    {
+     "version_id": null,
+     "project_id": "T9PomCSv",
+     "file_name": null,
+     "dependency_type": "required"
+    },
+    {
+     "version_id": null,
+     "project_id": "LNytGWDc",
+     "file_name": null,
+     "dependency_type": "required"
+    }
+   ]
+  }
+ },
+ {
+  "slug": "create-big-cannons",
+  "title": "Create Big Cannons",
+  "client": "required",
+  "server": "required",
+  "version": {
+   "game_versions": [
+    "1.21.1"
+   ],
+   "loaders": [
+    "neoforge"
+   ],
+   "environment": "client_and_server",
+   "id": "bOiDu0LS",
+   "project_id": "GWp4jCJj",
+   "author_id": "N2oCO0qG",
+   "featured": false,
+   "name": "Create Big Cannons 5.11.7",
+   "version_number": "5.11.7",
+   "changelog": "**Create Big Cannons 5.11.7 brings more fixes, as well as support for Sable 2.0.0.**\n\n### Added:\n- [Datapacks] Added example JSON files of big cannon and autocannon materials in the built-in `example_createbigcannons` folder\n\n### Fixed:\n- Fixed unfuzed and non-tracer projectile block items not being consumable by schematic printer\n- [Sable] Fixed shell impact compat NoSuchMethodError crash\n",
+   "changelog_url": null,
+   "date_published": "2026-06-22T22:26:12.060170Z",
+   "downloads": 1233229,
+   "version_type": "release",
+   "status": "listed",
+   "requested_status": null,
+   "files": [
+    {
+     "id": "uUJ2vvYV",
+     "hashes": {
+      "sha512": "24f414dfbb973a0f4d9c9b2aa059edc7bed4d23b4f39eb1f7d23a1d6b437e3b5d64cca6e4b85ff7eb2815743fa711d54ad652bffe96d1eb1234544716006440d",
+      "sha1": "c90ee0b2142e2c58d233e150cb3a24c7cb07eb2d"
+     },
+     "url": "https://cdn.modrinth.com/data/GWp4jCJj/versions/bOiDu0LS/createbigcannons-5.11.7%2Bmc.1.21.1.jar",
+     "filename": "createbigcannons-5.11.7+mc.1.21.1.jar",
+     "primary": true,
+     "size": 3771506,
+     "file_type": null
+    }
+   ],
+   "dependencies": [
+    {
+     "version_id": null,
+     "project_id": "B3pb093D",
+     "file_name": null,
+     "dependency_type": "required"
+    },
+    {
+     "version_id": null,
+     "project_id": "LNytGWDc",
+     "file_name": null,
+     "dependency_type": "required"
+    }
+   ]
+  }
+ },
+ {
+  "slug": "create-propulsion-simulated",
+  "title": "Create Propulsion: Simulated",
+  "client": "required",
+  "server": "required",
+  "version": {
+   "game_versions": [
+    "1.21.1"
+   ],
+   "loaders": [
+    "neoforge"
+   ],
+   "environment": "client_and_server",
+   "id": "H13U56dc",
+   "project_id": "ApkoHNO9",
+   "author_id": "sCmKl2Ju",
+   "featured": false,
+   "name": "Create Propulsion: Simulated 1.1.5",
+   "version_number": "1.1.5",
+   "changelog": "- **NEW!** Solid Fuel Thruster\n- **NEW!** Data-driven solid thruster fuels with datapack and KubeJS support\n- **NEW!** Advanced Tilt Adapter with configurable left/right angle limits\n- **NEW!** Platinum Fluid Vessel with doubled fluid capacity\n- Added Solid Fuel Thruster automation and CC:Tweaked peripheral support\n- Added Blaze Cake and Creative Blaze Cake solid thruster fuels\n- Added Cosmonautics compatibility\n- Updated Sable requirement to 2.0.3+\n- Updated bundled Simulated, Aeronautics, and Offroad dependencies\n- Reworked thruster plumes with particle and shader rendering modes\n- Improved plumes on moving, turning, vector, and multiblock thrusters\n- Added thruster startup, loop, and shutdown effects and sounds\n- Added dedicated Ion Thruster sounds\n- Made thrust and resource consumption scale with effective output\n- Fixed Ion Thruster FE consumption and partial-energy calculations\n- Fixed Liquid Vector Thruster fuel storage and goggles information\n- Added configurable multiblock thrust, fuel, and oxidizer efficiency\n- Fixed multiblock thrust being applied off-center\n- Fixed copied multiblock thrusters losing their controller topology\n- Fixed multiblock thruster ComputerCraft peripherals\n- Reworked cable energy routing to process each network once per tick\n- Added mounted fluid storage support for Platinum Tanks and Vessels\n- Fixed Tilt Adapter target drift, motion, and angle handling\n- Fixed inactive meshed thrusters displaying flames\n- Fixed thruster plume bounding boxes and particle curvature\n- Fixed Solid Fuel Thruster model and collision shape\n- Fixed Platinum Casing not being mineable or dropping itself\n- Fixed duplicate Create-style tooltips and incorrect fuel efficiency display\n- Reorganized the creative tab into sections\n- Updated Chinese and Ukrainian localizations\n- Improved thruster synchronization and rendering performance",
+   "changelog_url": null,
+   "date_published": "2026-07-23T21:50:58.293625Z",
+   "downloads": 484102,
+   "version_type": "release",
+   "status": "listed",
+   "requested_status": null,
+   "files": [
+    {
+     "id": "AiDN8Lni",
+     "hashes": {
+      "sha1": "928e9428ee92d07426c296b04a7fffb1e737e290",
+      "sha512": "6096c9c5cb220219a0b58b56f9fefd63f8b79a0967d326727b4206d62df1813da73956aeae2fa5b839160a1bb5af8e099726d12d2d93f10e5f157beb85bb9c52"
+     },
+     "url": "https://cdn.modrinth.com/data/ApkoHNO9/versions/H13U56dc/createpropulsion-1.1.5.jar",
+     "filename": "createpropulsion-1.1.5.jar",
+     "primary": true,
+     "size": 1707765,
+     "file_type": null
+    }
+   ],
+   "dependencies": []
+  }
+ },
+ {
+  "slug": "xaeros-minimap",
+  "title": "Xaero's Minimap",
+  "client": "required",
+  "server": "optional",
+  "version": {
+   "game_versions": [
+    "1.21",
+    "1.21.1"
+   ],
+   "loaders": [
+    "neoforge"
+   ],
+   "environment": "client_only_server_optional",
+   "id": "irjR7dHk",
+   "project_id": "1bokaNcj",
+   "author_id": "ANNqL3WC",
+   "featured": false,
+   "name": "Xaero's Minimap 26.6.0",
+   "version_number": "neoforge-1.21.1-26.6.0",
+   "changelog": "[Read changelogs](https://chocolateminecraft.com/update.php?mod_id=0)",
+   "changelog_url": null,
+   "date_published": "2026-10-05T07:41:58.151551Z",
+   "downloads": 395574,
+   "version_type": "release",
+   "status": "listed",
+   "requested_status": null,
+   "files": [
+    {
+     "id": "j38Fs0Pb",
+     "hashes": {
+      "sha1": "551e8e2aa3498b506cc949a74606cdc0380e5e00",
+      "sha512": "d56b93ddb921285624b491d6a85aba23748bec9974867399c881c257eb25a746df92a735473adf3a6875e0928a56ff78245d5238eb9207b0e45c3fec20c896dc"
+     },
+     "url": "https://cdn.modrinth.com/data/1bokaNcj/versions/irjR7dHk/xaerominimap-neoforge-1.21.1-26.6.0.jar",
+     "filename": "xaerominimap-neoforge-1.21.1-26.6.0.jar",
+     "primary": true,
+     "size": 2186351,
+     "file_type": null
+    }
+   ],
+   "dependencies": [
+    {
+     "version_id": null,
+     "project_id": "gF3BGWvG",
+     "file_name": null,
+     "dependency_type": "optional"
+    }
+   ]
+  }
+ },
+ {
+  "slug": "xaeros-world-map",
+  "title": "Xaero's World Map",
+  "client": "required",
+  "server": "optional",
+  "version": {
+   "game_versions": [
+    "1.21",
+    "1.21.1"
+   ],
+   "loaders": [
+    "neoforge"
+   ],
+   "environment": "client_only_server_optional",
+   "id": "SnQ4SoDe",
+   "project_id": "NcUtCpym",
+   "author_id": "ANNqL3WC",
+   "featured": false,
+   "name": "Xaero's World Map 1.47.0",
+   "version_number": "neoforge-1.21.1-1.47.0",
+   "changelog": "[Read changelogs](https://chocolateminecraft.com/update.php?mod_id=2)",
+   "changelog_url": null,
+   "date_published": "2026-10-05T07:28:39.529512Z",
+   "downloads": 372474,
+   "version_type": "release",
+   "status": "listed",
+   "requested_status": null,
+   "files": [
+    {
+     "id": "BsnfptQF",
+     "hashes": {
+      "sha1": "2936c9cb9dfbdab145fe6f1e8ae2c68915246a5f",
+      "sha512": "4d2d78bc85afa002f682ef344b7284cf1baa4903cc5a11cd1d7bd260ac63952580ae717bab47079540ead633cdd5d8e4fdf230dc99a68bcb7a269500e7dada13"
+     },
+     "url": "https://cdn.modrinth.com/data/NcUtCpym/versions/SnQ4SoDe/xaeroworldmap-neoforge-1.21.1-1.47.0.jar",
+     "filename": "xaeroworldmap-neoforge-1.21.1-1.47.0.jar",
+     "primary": true,
+     "size": 1427078,
+     "file_type": null
+    }
+   ],
+   "dependencies": [
+    {
+     "version_id": null,
+     "project_id": "gF3BGWvG",
+     "file_name": null,
+     "dependency_type": "optional"
+    }
+   ]
+  }
+ },
+ {
+  "slug": "jei",
+  "title": "Just Enough Items (JEI)",
+  "client": "optional",
+  "server": "optional",
+  "version": {
+   "game_versions": [
+    "1.21",
+    "1.21.1"
+   ],
+   "loaders": [
+    "neoforge"
+   ],
+   "environment": "client_or_server_prefers_both",
+   "id": "iv3KiVkE",
+   "project_id": "u6dRKJwZ",
+   "author_id": "nMXRSbhF",
+   "featured": false,
+   "name": "19.64.0.455 for NeoForge 1.21.1",
+   "version_number": "19.64.0.455",
+   "changelog": "  * [Remove unused Travis CI configuration](https://github.com/mezz/JustEnoughItems/commit/881197311f260c8b241813436081543ff7dc42a4) - mezz\n  * [Test packaged Forge interface linkage](https://github.com/mezz/JustEnoughItems/commit/46864b3b78074d732fa5d0358be8343d234f5d25) - mezz\n",
+   "changelog_url": null,
+   "date_published": "2026-10-16T08:32:41.534823Z",
+   "downloads": 174516,
+   "version_type": "release",
+   "status": "listed",
+   "requested_status": null,
+   "files": [
+    {
+     "id": "ngbRb9r5",
+     "hashes": {
+      "sha512": "fdd02e57ce4dcf20b69860a5ace1b97d9a771486241179cf9edfe71e30c69bb4003b046d0cce8d8c4913b9689f1d8b04cf0542b0b04a6cf0b3b0465f3bb11702",
+      "sha1": "f6d6fc08d54c40752926b570a2220471e8c45c1a"
+     },
+     "url": "https://cdn.modrinth.com/data/u6dRKJwZ/versions/iv3KiVkE/jei-1.21.1-neoforge-19.64.0.455.jar",
+     "filename": "jei-1.21.1-neoforge-19.64.0.455.jar",
+     "primary": true,
+     "size": 2375741,
+     "file_type": null
+    }
+   ],
+   "dependencies": [
+    {
+     "version_id": null,
+     "project_id": "BOHUKqOz",
+     "file_name": null,
+     "dependency_type": "optional"
+    },
+    {
+     "version_id": null,
+     "project_id": "7tEfOcA7",
+     "file_name": null,
+     "dependency_type": "required"
+    }
+   ]
+  }
+ },
+ {
+  "slug": "jade",
+  "title": "Jade \ud83d\udd0d",
+  "client": "optional",
+  "server": "optional",
+  "version": {
+   "game_versions": [
+    "1.21.1"
+   ],
+   "loaders": [
+    "neoforge"
+   ],
+   "environment": "client_or_server_prefers_both",
+   "id": "eYz2YBGT",
+   "project_id": "nvQzSEkH",
+   "author_id": "UxbEV316",
+   "featured": false,
+   "name": "[NeoForge 1.21.1] 15.10.6",
+   "version_number": "15.10.6+neoforge",
+   "changelog": "## 15.10.6\r\n\r\n- fix: Cannot display fluids that need registries to encode\r\n- fix: [#796](https://github.com/Snownee/Jade/issues/796)\r\n- Update build.gradle for 1.21-neoforge\r\n- Merge branch '1.21-neoforge' of https://github.com/Snownee/Jade into 1.21-neoforge\r\n- fix: improve compatibility with Create Aeronautics\r\n- update Chinese translation ([#750](https://github.com/Snownee/Jade/issues/750))\r\n\r\n## 15.10.5\r\n\r\n- [1.21-neoforge] disable blend and depth test after rendering overlay is done ([#716](https://github.com/Snownee/Jade/issues/716))\r\n\r\n## 15.10.4\r\n\r\n- fix: remove destroySpeed check (close [#689](https://github.com/Snownee/Jade/issues/689))\r\n- fix: do not show \"empty\" on jukebox if there is no server data (close [#695](https://github.com/Snownee/Jade/issues/695))\r\n\r\n## 15.10.3\r\n\r\n- fix: modded bossbar offset ([#645](https://github.com/Snownee/Jade/issues/645))\r\n\r\n## 15.10.2\r\n\r\n- fix: InvWrapper NPE on trapped chest (close [#633](https://github.com/Snownee/Jade/issues/633))\r\n\r\n## 15.10.1\r\n\r\n- fix: FluidView#readDefault not working for amounts bigger than max int on NeoForge (close [#616](https://github.com/Snownee/Jade/issues/616))\r\n- fix: stream data ClassCastException\r\n- fix: Jade cannot be built locally (close [#540](https://github.com/Snownee/Jade/issues/540))\r\n",
+   "changelog_url": null,
+   "date_published": "2026-08-06T23:11:55.577664Z",
+   "downloads": 1044879,
+   "version_type": "release",
+   "status": "listed",
+   "requested_status": null,
+   "files": [
+    {
+     "id": "g3H403HC",
+     "hashes": {
+      "sha1": "88ee316e68900080b017f60c12162e2731924cf8",
+      "sha512": "dad9755dce8d85d914fc4df2baa0211f13e5839a71c1925fdd01f69081a95e30a2934e6273f8b01f0169adebe7a9dae57a8d904de0c4cb36dc17369bb474f0f2"
+     },
+     "url": "https://cdn.modrinth.com/data/nvQzSEkH/versions/eYz2YBGT/Jade-1.21.1-NeoForge-15.10.6.jar",
+     "filename": "Jade-1.21.1-NeoForge-15.10.6.jar",
+     "primary": true,
+     "size": 726853,
+     "file_type": null
+    }
+   ],
+   "dependencies": [
+    {
+     "version_id": null,
+     "project_id": "u6dRKJwZ",
+     "file_name": null,
+     "dependency_type": "optional"
+    }
+   ]
+  }
+ },
+ {
+  "slug": "appleskin",
+  "title": "AppleSkin",
+  "client": "optional",
+  "server": "optional",
+  "version": {
+   "game_versions": [
+    "1.21",
+    "1.21.1",
+    "1.21.2"
+   ],
+   "loaders": [
+    "neoforge"
+   ],
+   "environment": "client_or_server_prefers_both",
+   "id": "uAKA6Laj",
+   "project_id": "EsAfCjCV",
+   "author_id": "qB1TNdUc",
+   "featured": false,
+   "name": "appleskin-neoforge-mc1.21-3.0.9",
+   "version_number": "3.0.9+mc1.21",
+   "changelog": "- Fix HUD overlay elements not being hidden properly while mounted (saturation, restored hunger/saturation, restored health)\n- Fix the config option showFoodValuesHudOverlay not properly hiding saturation restored by held food\n",
+   "changelog_url": null,
+   "date_published": "2026-04-01T04:50:54.655459Z",
+   "downloads": 3507147,
+   "version_type": "release",
+   "status": "listed",
+   "requested_status": null,
+   "files": [
+    {
+     "id": "FoJ9aBpV",
+     "hashes": {
+      "sha1": "81cf0e668f991f83ac8820c386fbd6c9c3602246",
+      "sha512": "f4ea46273e407334b63e262e2555c9a8204f7b5e60f23f272fbaa83ad9e88800e0ee186aca840710df2dbe0a18b37758695fef2ae1a902c10b3706e3de772937"
+     },
+     "url": "https://cdn.modrinth.com/data/EsAfCjCV/versions/uAKA6Laj/appleskin-neoforge-mc1.21-3.0.9.jar",
+     "filename": "appleskin-neoforge-mc1.21-3.0.9.jar",
+     "primary": true,
+     "size": 75804,
+     "file_type": null
+    }
+   ],
+   "dependencies": []
+  }
+ },
+ {
+  "slug": "farmers-delight",
+  "title": "Farmer's Delight",
+  "client": "required",
+  "server": "required",
+  "version": {
+   "game_versions": [
+    "1.21.1"
+   ],
+   "loaders": [
+    "neoforge"
+   ],
+   "environment": "client_and_server",
+   "id": "XTVZDOol",
+   "project_id": "R2OftAxM",
+   "author_id": "btHGOarG",
+   "featured": false,
+   "name": "Farmer's Delight 1.3.4 - 1.21.1",
+   "version_number": "1.21.1-1.3.4",
+   "changelog": "## 1.3.4\n\n### Fixes\n- Fixed a broken behavior when pushing Feasts with Pistons;\n- (1.21.1+) Fixed config \"generateFDChestLoot\" not properly disabling FD's extra chest loot generation;",
+   "changelog_url": null,
+   "date_published": "2026-08-29T23:21:15.190939Z",
+   "downloads": 645475,
+   "version_type": "release",
+   "status": "listed",
+   "requested_status": null,
+   "files": [
+    {
+     "id": "xb3oJkla",
+     "hashes": {
+      "sha1": "27675ddfcb8cc37e6ea1ab6c15051c7949d94657",
+      "sha512": "1f6f8796469f747cff36f477b4f589a3d69613882399f9ee7f86db36c7bca9aa4828731f43db15dc6c7f5a4c1bbe3d4092a232e8cef010b09cec0581848fda90"
+     },
+     "url": "https://cdn.modrinth.com/data/R2OftAxM/versions/XTVZDOol/FarmersDelight-1.21.1-1.3.4.jar",
+     "filename": "FarmersDelight-1.21.1-1.3.4.jar",
+     "primary": true,
+     "size": 3160490,
+     "file_type": null
+    }
+   ],
+   "dependencies": []
+  }
+ },
+ {
+  "slug": "aquaculture",
+  "title": "Aquaculture 2",
+  "client": "required",
+  "server": "required",
+  "version": {
+   "game_versions": [
+    "1.21.1"
+   ],
+   "loaders": [
+    "neoforge"
+   ],
+   "environment": "client_and_server",
+   "id": "EVDXfAI9",
+   "project_id": "Vl1uNAuy",
+   "author_id": "YBkWdnsE",
+   "featured": false,
+   "name": "Aquaculture 2-1.21.1-2.7.22",
+   "version_number": "2.7.22",
+   "changelog": "- Added a bunch of missing tags",
+   "changelog_url": null,
+   "date_published": "2026-11-03T19:52:52.320213Z",
+   "downloads": 9748,
+   "version_type": "release",
+   "status": "listed",
+   "requested_status": null,
+   "files": [
+    {
+     "id": "9CxYw1yb",
+     "hashes": {
+      "sha512": "f595a94cb5caf683ceebc01dc5265df934ecb0e6e0e01aec8934bc79193150eb198de56f9e5638561252cbc9a8f39ae3fcffdfe26cef72858c30c6e94dd24d2c",
+      "sha1": "972b0ab7f0f07f4dbcb00af80c1addf5325d0683"
+     },
+     "url": "https://cdn.modrinth.com/data/Vl1uNAuy/versions/EVDXfAI9/Aquaculture-1.21.1-2.7.22.jar",
+     "filename": "Aquaculture-1.21.1-2.7.22.jar",
+     "primary": true,
+     "size": 608905,
+     "file_type": null
+    }
+   ],
+   "dependencies": []
+  }
+ },
+ {
+  "slug": "supplementaries",
+  "title": "Supplementaries",
+  "client": "required",
+  "server": "required",
+  "version": {
+   "game_versions": [
+    "1.21.1"
+   ],
+   "loaders": [
+    "neoforge"
+   ],
+   "environment": "client_and_server",
+   "id": "ry2Njtnv",
+   "project_id": "fFEIiSDQ",
+   "author_id": "BU21lLGA",
+   "featured": false,
+   "name": "supplementaries-1.21.1-4.1.1-neoforge",
+   "version_number": "1.21.1-4.1.1",
+   "changelog": "- added redstone lantern\n- added cannnon shoot animations\n- you can damage entities you pass through when shot by a cannon\n- misc improvements to cannons\n- many many misc fixes\n- pignatas can be fired from cannons\n- added whimsy and carousel enchantments for quivers and lunch baskets\n- mod mod compat for slimed effect (environmental mud balls)\n- when vanilla backport is on all copper sconces will be registered\n- added a cannon advancement\n- soap can finall remove armor trims\n- added a config to render flags 2d\n- ash wont extinguish fire as it lands\n- all mod tags will be disabled when their feature config is off.\n\n",
+   "changelog_url": null,
+   "date_published": "2026-11-13T22:17:49.781919Z",
+   "downloads": 20795,
+   "version_type": "release",
+   "status": "listed",
+   "requested_status": null,
+   "files": [
+    {
+     "id": "6nMLxQOq",
+     "hashes": {
+      "sha1": "b1e0c795341f98ce4980ef2d606f3b9f9ef38021",
+      "sha512": "4acaddb2c7ff2cd93819fade6553b233f50ad084f8dbf1e8ad492eebc79cf1a4b477c46c775cf7fb7d93881d562d29f4e0de58701713a77cac03b72b31a04060"
+     },
+     "url": "https://cdn.modrinth.com/data/fFEIiSDQ/versions/ry2Njtnv/supplementaries-1.21.1-4.1.1-neoforge.jar",
+     "filename": "supplementaries-1.21.1-4.1.1-neoforge.jar",
+     "primary": true,
+     "size": 13958834,
+     "file_type": null
+    }
+   ],
+   "dependencies": [
+    {
+     "version_id": null,
+     "project_id": "twkfQtEc",
+     "file_name": null,
+     "dependency_type": "required"
+    }
+   ]
+  }
+ },
+ {
+  "slug": "comforts",
+  "title": "Comforts",
+  "client": "required",
+  "server": "required",
+  "version": {
+   "game_versions": [
+    "1.21",
+    "1.21.1"
+   ],
+   "loaders": [
+    "neoforge"
+   ],
+   "environment": "client_and_server",
+   "id": "3kpPjcTc",
+   "project_id": "SaCpeal4",
+   "author_id": "zbpHS3ry",
+   "featured": false,
+   "name": "comforts-neoforge-9.0.5+1.21.1",
+   "version_number": "9.0.5+1.21.1",
+   "changelog": "The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).\n\nThis is a copy of the changelog for the most recent version. For the full version history, go [here](https://github.com/illusivesoulworks/comforts/blob/1.21.x/CHANGELOG.md).\n\n## [9.0.5+1.21.1] - 2026.01.23\n### Fixed\n- Fixed `nightWakeTimeOffset` configuration option conflicting with mods that increment ticks while sleeping [#190](https://github.com/illusivesoulworks/comforts/issues/190)\n",
+   "changelog_url": null,
+   "date_published": "2026-01-24T04:53:24.006527Z",
+   "downloads": 719201,
+   "version_type": "release",
+   "status": "listed",
+   "requested_status": null,
+   "files": [
+    {
+     "id": "5eDVsh6Z",
+     "hashes": {
+      "sha512": "e9de2952545e9e773a6e78fc501e8cd231ea19750c30404355b71df9928eb5bd0921a4429aeca9d0fa10e67717f77fcf7a2aae117ac953b8f7de246b0ad685e4",
+      "sha1": "21d6bee3821d62fe3356c51fb1d697871a3087ff"
+     },
+     "url": "https://cdn.modrinth.com/data/SaCpeal4/versions/3kpPjcTc/comforts-neoforge-9.0.5%2B1.21.1.jar",
+     "filename": "comforts-neoforge-9.0.5+1.21.1.jar",
+     "primary": true,
+     "size": 422658,
+     "file_type": null
+    },
+    {
+     "id": "zOQB8TpB",
+     "hashes": {
+      "sha1": "5584920aea8c442d88b5ad2ef9efa0432437c80a",
+      "sha512": "e28306b8836fa739dcfd7522336c9c12f4e22753efbd88c6503d3c087dbe4845aa0f2f2fdb637a531b42e93b20949ffcc646841f8ccdf68d3389f6902ea69f27"
+     },
+     "url": "https://cdn.modrinth.com/data/SaCpeal4/versions/3kpPjcTc/comforts-neoforge-9.0.5%2B1.21.1-sources.jar",
+     "filename": "comforts-neoforge-9.0.5+1.21.1-sources.jar",
+     "primary": false,
+     "size": 258351,
+     "file_type": null
+    }
+   ],
+   "dependencies": []
+  }
+ },
+ {
+  "slug": "sodium",
+  "title": "Sodium",
+  "client": "required",
+  "server": "unsupported",
+  "version": {
+   "game_versions": [
+    "1.21.1"
+   ],
+   "loaders": [
+    "neoforge"
+   ],
+   "environment": "client_only",
+   "id": "uMOpc5uV",
+   "project_id": "AANobbMI",
+   "author_id": "TEZXhE2U",
+   "featured": false,
+   "name": "Sodium 0.8.13 for NeoForge 1.21.1",
+   "version_number": "mc1.21.1-0.8.13-neoforge",
+   "changelog": "Sodium 0.8.13 fixes potential minor bugs and improves the crash log message to avoid misattribution of unrelated errors when NeoForge continues loading despite severe errors.\n\n- Clarify crash log error message when crashing due to missing mod config, which basically only happens when neoforge loads the game despite it having encountered a severe error.\n- Fix buffer overflow in Kernel32.getModuleFileName\n- Use the correct atomic operations on NativeBuffer.ALLOCATED\n- Use clearenv() to delete environment variable\n- Implement override/overlay priority in the graphics options Config API ([#3866](https://github.com/CaffeineMC/sodium/pull/3866))",
+   "changelog_url": null,
+   "date_published": "2026-08-28T20:55:02.593669Z",
+   "downloads": 1704529,
+   "version_type": "release",
+   "status": "listed",
+   "requested_status": null,
+   "files": [
+    {
+     "id": "itaN5aOm",
+     "hashes": {
+      "sha1": "1757289be21ed18db5b0d90703fa3db1b2de5693",
+      "sha512": "4f537696af95411e9daf15795fb5fcbc49913d488a96fa912fa8f1d7db408710995e8a1461190f3cd0f8217bf9e35e9539176592428ed587ca2d7aa84450a390"
+     },
+     "url": "https://cdn.modrinth.com/data/AANobbMI/versions/uMOpc5uV/sodium-neoforge-0.8.13%2Bmc1.21.1.jar",
+     "filename": "sodium-neoforge-0.8.13+mc1.21.1.jar",
+     "primary": true,
+     "size": 1292934,
+     "file_type": null
+    }
+   ],
+   "dependencies": []
+  }
+ },
+ {
+  "slug": "modernfix",
+  "title": "ModernFix",
+  "client": "optional",
+  "server": "optional",
+  "version": {
+   "game_versions": [
+    "1.21.1"
+   ],
+   "loaders": [
+    "neoforge"
+   ],
+   "environment": "client_or_server_prefers_both",
+   "id": "ZDZENbHH",
+   "project_id": "nmDcB62a",
+   "author_id": "6bGskxLV",
+   "featured": false,
+   "name": "modernfix-neoforge-5.27.27+mc1.21.1.jar",
+   "version_number": "5.27.27+mc1.21.1",
+   "changelog": "Please check the [GitHub wiki](https://github.com/embeddedt/ModernFix/wiki/Changelog) for major changes.",
+   "changelog_url": null,
+   "date_published": "2026-10-24T13:23:07.902627Z",
+   "downloads": 238799,
+   "version_type": "release",
+   "status": "listed",
+   "requested_status": null,
+   "files": [
+    {
+     "id": "SkP8uBlr",
+     "hashes": {
+      "sha1": "52c008540c7dc2cc451f7e939a885d7462c9ae72",
+      "sha512": "af14a35e51f1c5d94139c6225ae641e8b0ded5a8c68eb4806cf28025d6c043455ac289902cd6b854a867320ab845ad619b186d02b8341822faf03f4476dec555"
+     },
+     "url": "https://cdn.modrinth.com/data/nmDcB62a/versions/ZDZENbHH/modernfix-neoforge-5.27.27%2Bmc1.21.1.jar",
+     "filename": "modernfix-neoforge-5.27.27+mc1.21.1.jar",
+     "primary": true,
+     "size": 614138,
+     "file_type": null
+    }
+   ],
+   "dependencies": []
+  }
+ },
+ {
+  "slug": "ferrite-core",
+  "title": "FerriteCore",
+  "client": "optional",
+  "server": "optional",
+  "version": {
+   "game_versions": [
+    "1.21.1"
+   ],
+   "loaders": [
+    "neoforge"
+   ],
+   "environment": "client_or_server",
+   "id": "x7kQWVju",
+   "project_id": "uXXizFIs",
+   "author_id": "cXzLZ8YY",
+   "featured": false,
+   "name": "ferritecore-7.0.3-neoforge",
+   "version_number": "7.0.3-neoforge",
+   "changelog": "- Reduce memory usage of data component patches\n- Fix loading slowdown with ModernFix dynamic resources\n",
+   "changelog_url": null,
+   "date_published": "2026-01-25T12:59:45.271417Z",
+   "downloads": 4694965,
+   "version_type": "release",
+   "status": "listed",
+   "requested_status": null,
+   "files": [
+    {
+     "id": "gC9tI9mZ",
+     "hashes": {
+      "sha512": "19af89a2075bb10a63884fa853ebf84b02c79dc3242430ecdad056fd764fdcde367a7303276b329df01b0736e2ef264c5d80c7dc92c6aebd244f556a230bb417",
+      "sha1": "9563692efb708b6b568df27a01ec52f6311928ef"
+     },
+     "url": "https://cdn.modrinth.com/data/uXXizFIs/versions/x7kQWVju/ferritecore-7.0.3-neoforge.jar",
+     "filename": "ferritecore-7.0.3-neoforge.jar",
+     "primary": true,
+     "size": 121559,
+     "file_type": null
+    }
+   ],
+   "dependencies": []
+  }
+ },
+ {
+  "slug": "entityculling",
+  "title": "Entity Culling",
+  "client": "required",
+  "server": "unsupported",
+  "version": {
+   "game_versions": [
+    "1.21.1"
+   ],
+   "loaders": [
+    "neoforge"
+   ],
+   "environment": "client_only",
+   "id": "DDaDZQ47",
+   "project_id": "NNAgCjsB",
+   "author_id": "Qnt13hO8",
+   "featured": false,
+   "name": "1.12.1-1.21.1 - NeoForge",
+   "version_number": "1.12.1",
+   "changelog": "## What's Changed\r\n- Add api for other mods to do custom culling without mixins [#358](https://github.com/tr7zw/EntityCulling/issues/358)\r\n\r\n**Full Changelog**: https://github.com/tr7zw/EntityCulling/compare/1.12.0...1.12.1\n",
+   "changelog_url": null,
+   "date_published": "2026-11-13T16:11:43.966329Z",
+   "downloads": 67430,
+   "version_type": "release",
+   "status": "listed",
+   "requested_status": null,
+   "files": [
+    {
+     "id": "agUchRaJ",
+     "hashes": {
+      "sha512": "c1818837b0e43f67fa4cd2cfffc2d57c17e579b405b215dd627e3ea68d0c000b56a79614cd41f20451ea7a687e9e9de66afe871f0b9bcec680699445ea0d9fa3",
+      "sha1": "75671869d5991e7fbeed77f0549501d1368d6f44"
+     },
+     "url": "https://cdn.modrinth.com/data/NNAgCjsB/versions/DDaDZQ47/entityculling-neoforge-1.12.1-mc1.21.1.jar",
+     "filename": "entityculling-neoforge-1.12.1-mc1.21.1.jar",
+     "primary": true,
+     "size": 1523607,
+     "file_type": null
+    }
+   ],
+   "dependencies": []
+  }
+ },
+ {
+  "slug": "immediatelyfast",
+  "title": "ImmediatelyFast",
+  "client": "required",
+  "server": "unsupported",
+  "version": {
+   "game_versions": [
+    "1.21",
+    "1.21.1"
+   ],
+   "loaders": [
+    "neoforge"
+   ],
+   "environment": "client_only",
+   "id": "EJzmEPZV",
+   "project_id": "5ZwdcRci",
+   "author_id": "XEedK03N",
+   "featured": false,
+   "name": "ImmediatelyFast 1.6.15",
+   "version_number": "1.6.15+1.21.1-neoforge",
+   "changelog": "* Fixed rendering of spell cooldowns from Iron's Spells 'N Spellbooks\r\n* Fixed Cosmetica screen rendering\r\n",
+   "changelog_url": null,
+   "date_published": "2026-10-13T19:56:38.884527Z",
+   "downloads": 323540,
+   "version_type": "release",
+   "status": "listed",
+   "requested_status": null,
+   "files": [
+    {
+     "id": "QDGQCHQp",
+     "hashes": {
+      "sha512": "c115cad7b060373fc597aae08c685e2d56f173b88b792a4a2c229e222f8da293b99865e9553cf716483d3c3d6a18f31c51c5dd55be22d4625ed2c962d7b94fd0",
+      "sha1": "f991166f7c82b493481c876e3c83c9fac4159671"
+     },
+     "url": "https://cdn.modrinth.com/data/5ZwdcRci/versions/EJzmEPZV/ImmediatelyFast-NeoForge-1.6.15%2B1.21.1.jar",
+     "filename": "ImmediatelyFast-NeoForge-1.6.15+1.21.1.jar",
+     "primary": true,
+     "size": 368896,
+     "file_type": null
+    }
+   ],
+   "dependencies": []
+  }
+ },
+ {
+  "slug": "essential",
+  "title": "Essential Mod",
+  "client": "required",
+  "server": "unsupported",
+  "version": {
+   "game_versions": [
+    "1.21.1"
+   ],
+   "loaders": [
+    "neoforge"
+   ],
+   "environment": "client_only",
+   "id": "wWG9Ml7D",
+   "project_id": "k2ZPuTBm",
+   "author_id": "67ZGFnqb",
+   "featured": true,
+   "name": "Essential 1.5.2",
+   "version_number": "1.5.2",
+   "changelog": "## Forge and NeoForge support\nEssential is now available on Forge and NeoForge for Minecraft 1.21.11, 26.1.2, 26.2, and 26.3.\n\n## Mod Compatibility\n- Fixed FancyMenu player entity element not facing the mouse when hovering Essential buttons on Minecraft 26.1 and above\n- Fixed FancyMenu background and player entity element not parallaxing when hovering Essential buttons on Minecraft 26.1 and above\n- Fixed FancyMenu player entity element not facing the mouse when hovering Essential buttons with the \"Render above vanilla\" option enabled\n- Fixed the game crashing with ImmediatelyFast on Minecraft 26.2 and above",
+   "changelog_url": null,
+   "date_published": "2026-11-02T16:09:39.222166Z",
+   "downloads": 89220,
+   "version_type": "release",
+   "status": "listed",
+   "requested_status": null,
+   "files": [
+    {
+     "id": "zcGtIONz",
+     "hashes": {
+      "sha512": "db6e49b81d5a4ac204f90cb9937df69831ef02993cba5624e536d294325214ee2679a992bfec389cbc8d870469c118f115720ba5699d99d4ef2478541eea2a5f",
+      "sha1": "b0b1463405bdf5020a3617f7810740ba5af6cfd1"
+     },
+     "url": "https://cdn.modrinth.com/data/k2ZPuTBm/versions/wWG9Ml7D/Essential_1-5-2_neoforge_1-21-1.jar",
+     "filename": "Essential_1-5-2_neoforge_1-21-1.jar",
+     "primary": true,
+     "size": 51488563,
+     "file_type": null
+    }
+   ],
+   "dependencies": []
+  }
+ },
+ {
+  "slug": "rpl",
+  "title": "Ritchie's Projectile Library",
+  "client": "required",
+  "server": "required",
+  "version": {
+   "game_versions": [
+    "1.21.1"
+   ],
+   "loaders": [
+    "neoforge"
+   ],
+   "environment": "client_and_server",
+   "id": "hZ6B2Z0x",
+   "project_id": "B3pb093D",
+   "author_id": "N2oCO0qG",
+   "featured": false,
+   "name": "Ritchie's Projectile Library 2.1.2",
+   "version_number": "2.1.2",
+   "changelog": "- Fixed network registry on NeoForge.\n- Fixed cannon shake effects on NeoForge.",
+   "changelog_url": null,
+   "date_published": "2026-02-07T08:42:23.436249Z",
+   "downloads": 2451471,
+   "version_type": "release",
+   "status": "listed",
+   "requested_status": null,
+   "files": [
+    {
+     "id": "r0LAsoHU",
+     "hashes": {
+      "sha512": "6d64c84505a5a8fbb96d106603065465c5a2314ec09636900c5c1a31014c12fa68f1a41e758313cbf0d6f95d9a1f53bd67339020f7d8db0e184c23f66aee0330",
+      "sha1": "ec2e4996f8bee8714173e603e379fef8a6901765"
+     },
+     "url": "https://cdn.modrinth.com/data/B3pb093D/versions/hZ6B2Z0x/ritchiesprojectilelib-2.1.2%2Bmc.1.21.1-neoforge.jar",
+     "filename": "ritchiesprojectilelib-2.1.2+mc.1.21.1-neoforge.jar",
+     "primary": true,
+     "size": 76369,
+     "file_type": null
+    }
+   ],
+   "dependencies": []
+  }
+ },
+ {
+  "slug": "mezzconfig",
+  "title": "MezzConfig",
+  "client": "optional",
+  "server": "optional",
+  "version": {
+   "game_versions": [
+    "1.21.1"
+   ],
+   "loaders": [
+    "neoforge"
+   ],
+   "environment": "client_or_server_prefers_both",
+   "id": "V6oWFnxW",
+   "project_id": "7tEfOcA7",
+   "author_id": "nMXRSbhF",
+   "featured": false,
+   "name": "MezzConfig 0.7.1 for NeoForge 1.21.1",
+   "version_number": "0.7.1",
+   "changelog": "  * [Bump version to 0.7.1](https://github.com/mezz/MezzConfig/commit/37d19968817180d639ab514a765aa5a1176ebe5d) - mezz\n  * [Resolve API baselines from released artifacts](https://github.com/mezz/MezzConfig/commit/558b40bc196512f8eda2e861c2a89a0d9230f9ed) - mezz\n  * [Expose stable config serializer value types](https://github.com/mezz/MezzConfig/commit/3916828773eb5c4a6aa7c68873a88f76fcd420fc) - mezz\n  * [Expose config description localization keys](https://github.com/mezz/MezzConfig/commit/827a8d48bf73d2974f7eb58509f3709351bce116) - mezz\n  * [Expose immutable sorting snapshots](https://github.com/mezz/MezzConfig/commit/a4bcfefe5f8ea4c00ab00530aff8a1861c100041) - mezz\n  * [Bump version to 0.6.9](https://github.com/mezz/MezzConfig/commit/cf69435f126306b328a448276894ece3c962d897) - mezz\n  * [Dispatch config listeners outside schema locks](https://github.com/mezz/MezzConfig/commit/20d3a08b2ecfb1214098d8a27c9c591105ee9ee9) - mezz\n  * [Add Simplified Chinese translation (#5)](https://github.com/mezz/MezzConfig/commit/8d287bd39d9b1b9101545e885dee6e74155720fd) - jim139129\n  * [Use AtomicFile for config file operations](https://github.com/mezz/MezzConfig/commit/e63a993fd4914b14a08987f0e8ef5a6a492f881d) - mezz\n  * [Bump version to 0.6.8](https://github.com/mezz/MezzConfig/commit/8a6524d2ae926daaa93540549b514672b5c0a926) - mezz\n",
+   "changelog_url": null,
+   "date_published": "2026-11-09T15:28:30.892646Z",
+   "downloads": 94282,
+   "version_type": "beta",
+   "status": "listed",
+   "requested_status": null,
+   "files": [
+    {
+     "id": "WKUmyyRx",
+     "hashes": {
+      "sha512": "e3576344d96b4734d35c7ceb969020ef728a666b771fb6da0465d08d940daff3c48352f6f3ca989edbe7fff57737d2fea4621f6422e858f95efe9fa70b46dfb2",
+      "sha1": "2382e29c9a0f44d4f4b9baa4cb3f6a356e048e60"
+     },
+     "url": "https://cdn.modrinth.com/data/7tEfOcA7/versions/V6oWFnxW/mezz_config-1.21.1-neoforge-0.7.1-standalone.jar",
+     "filename": "mezz_config-1.21.1-neoforge-0.7.1-standalone.jar",
+     "primary": true,
+     "size": 347249,
+     "file_type": null
+    }
+   ],
+   "dependencies": []
+  }
+ },
+ {
+  "slug": "moonlight",
+  "title": "Moonlight Lib",
+  "client": "required",
+  "server": "required",
+  "version": {
+   "game_versions": [
+    "1.21.1"
+   ],
+   "loaders": [
+    "neoforge"
+   ],
+   "environment": "client_and_server",
+   "id": "yBea1yLM",
+   "project_id": "twkfQtEc",
+   "author_id": "BU21lLGA",
+   "featured": false,
+   "name": "moonlight-1.21.1-3.8.3-neoforge",
+   "version_number": "1.21.1-3.8.3",
+   "changelog": "- fixed some lifecycle issues, minor leaks on the world screen only",
+   "changelog_url": null,
+   "date_published": "2026-11-09T00:29:34.326332Z",
+   "downloads": 62931,
+   "version_type": "release",
+   "status": "listed",
+   "requested_status": null,
+   "files": [
+    {
+     "id": "YLq9Tqd9",
+     "hashes": {
+      "sha1": "046821d548a1269164c792bab46d55798085c285",
+      "sha512": "7b6479af8052419080bb1f5d28742daeef38a62bf33f2b47b70a1dafb01a06afd485cbc22e9f95c210e72b62364b96f539257dc8e03f5631a586ee9c4b5121bf"
+     },
+     "url": "https://cdn.modrinth.com/data/twkfQtEc/versions/yBea1yLM/moonlight-1.21.1-3.8.3-neoforge.jar",
+     "filename": "moonlight-1.21.1-3.8.3-neoforge.jar",
+     "primary": true,
+     "size": 2327347,
+     "file_type": null
+    }
+   ],
+   "dependencies": []
+  }
+ }
+]

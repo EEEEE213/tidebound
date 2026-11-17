@@ -1,0 +1,55 @@
+# fresh archipelago world: home island, a guarded island, launch a raft, sail it
+newworld tidebound_tour 20261117
+wait 300
+cmd gamerule doDaylightCycle false
+cmd time set 1000
+cmd weather clear
+cmd gamerule doMobSpawning false
+wait 40
+shot 01_spawn
+fly
+cmd tp @s 0 150 60
+look 180 40
+wait 160
+shot 02_home_island_aerial
+cmd tidebound goto
+fly
+cmd tp @s ~ 70 ~
+wait 20
+faceisland 5
+wait 200
+shot 03_guarded_island_from_sea
+cmd tp @s ~ ~70 ~
+faceisland 35
+wait 160
+shot 04_guarded_island_aerial
+cmd tidebound island
+cmd tp @s 0 66 180
+fly
+look 180 80
+wait 100
+log before raft
+useitem
+wait 60
+cmd gamemode survival
+wait 40
+look 180 20
+wait 20
+shot 05_raft_launched
+turn 180 50
+wait 5
+log looking for core
+corescreen
+wait 10
+shot 06_ship_core_screen
+click Take the Helm
+wait 10
+look 180 15
+hold forward 160
+shot 07_sailing
+hold right 50
+shot 08_turning
+log after sailing
+cmd gamemode creative
+wait 10
+quit

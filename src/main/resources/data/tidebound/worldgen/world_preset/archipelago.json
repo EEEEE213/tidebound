@@ -1,0 +1,61 @@
+{
+  "dimensions": {
+    "minecraft:overworld": {
+      "type": "minecraft:overworld",
+      "generator": {
+        "type": "minecraft:noise",
+        "biome_source": {
+          "type": "tidebound:archipelago",
+          "island_biomes": [
+            "minecraft:forest",
+            "minecraft:birch_forest",
+            "minecraft:plains",
+            "minecraft:taiga",
+            "minecraft:jungle",
+            "minecraft:savanna",
+            "minecraft:cherry_grove",
+            "minecraft:dark_forest",
+            "minecraft:flower_forest",
+            "minecraft:snowy_taiga",
+            "minecraft:meadow",
+            "minecraft:old_growth_pine_taiga",
+            "minecraft:sparse_jungle",
+            "minecraft:windswept_forest"
+          ],
+          "home_biome": "minecraft:forest",
+          "beach": "minecraft:beach",
+          "snowy_beach": "minecraft:snowy_beach",
+          "ocean": "minecraft:ocean",
+          "deep_ocean": "minecraft:deep_ocean",
+          "warm_ocean": "minecraft:warm_ocean",
+          "lukewarm_ocean": "minecraft:lukewarm_ocean",
+          "deep_lukewarm_ocean": "minecraft:deep_lukewarm_ocean",
+          "cold_ocean": "minecraft:cold_ocean",
+          "deep_cold_ocean": "minecraft:deep_cold_ocean"
+        },
+        "settings": "tidebound:archipelago"
+      }
+    },
+    "minecraft:the_end": {
+      "type": "minecraft:the_end",
+      "generator": {
+        "type": "minecraft:noise",
+        "biome_source": {
+          "type": "minecraft:the_end"
+        },
+        "settings": "minecraft:end"
+      }
+    },
+    "minecraft:the_nether": {
+      "type": "minecraft:the_nether",
+      "generator": {
+        "type": "minecraft:noise",
+        "biome_source": {
+          "type": "minecraft:multi_noise",
+          "preset": "minecraft:nether"
+        },
+        "settings": "minecraft:nether"
+      }
+    }
+  }
+}

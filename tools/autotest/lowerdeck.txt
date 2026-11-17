@@ -1,0 +1,29 @@
+newworld LowerDeck2 4242
+wait 200
+cmd time set noon
+cmd tp @s 0 66 180
+fly
+look 180 80
+wait 100
+useitem
+wait 60
+aimcore
+corescreen
+wait 10
+click Install
+wait 40
+close
+wait 200
+tpcore 2 -3 5 0 5
+wait 40
+shot ld_mess
+tpcore 0 -3 11 0 15
+wait 40
+shot ld_aft
+tpcore -1 -3 -3 180 5
+wait 40
+shot ld_fore
+tpcore 2.5 0 -10 0 40
+wait 40
+shot ld_stairs
+quit

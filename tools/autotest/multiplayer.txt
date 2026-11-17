@@ -1,0 +1,34 @@
+connect localhost:25611
+wait 100
+log joined
+cmd gamemode creative
+cmd time set noon
+cmd tp @s 0 66 180
+fly
+look 180 80
+wait 100
+useitem
+wait 60
+aimcore
+corescreen
+wait 10
+shot mp_screen
+click Install
+wait 60
+close
+wait 200
+aimcore
+corescreen
+wait 10
+click Take the Helm
+wait 10
+log helm-start
+look 180 10
+hold forward 200
+log after-forward
+shot mp_sailing
+hold sneak 5
+cmd tp @s 160 36 0
+wait 60
+shot mp_deep
+quit

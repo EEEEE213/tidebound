@@ -1,0 +1,14 @@
+.gradle/
+.gradle-home/
+build/
+run/
+run-*/
+logs-test/
+*.log
+tools/render/mc/
+libs/
+dist/
+modpack/cache/
+docs/images/presets/*.png
+gametest*.log
+logs-*.txt

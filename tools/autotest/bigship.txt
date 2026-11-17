@@ -1,0 +1,57 @@
+newworld BigShip2 4242
+wait 200
+cmd time set noon
+cmd tp @s 0 66 180
+fly
+look 180 80
+wait 100
+useitem
+wait 60
+aimcore
+corescreen
+wait 10
+click Install
+wait 30
+click Install
+wait 30
+click Install
+wait 30
+click Install
+wait 30
+click Install
+wait 30
+click Install
+wait 30
+click Install
+wait 30
+click Install
+wait 30
+click Install
+wait 40
+shot big_screen
+close
+log after build
+cmd tp @s 30 82 205 135 18
+fly
+wait 5
+fly
+wait 75
+shot big_ship
+cmd tp @s -28 70 160 -110 8
+fly
+wait 60
+shot big_ship_side
+cmd tp @s 0 69 180
+fly
+wait 40
+aimcore
+corescreen
+wait 10
+click Take the Helm
+wait 10
+look 180 10
+hold forward 160
+shipinfo sailing
+shot big_sailing
+hold sneak 5
+quit

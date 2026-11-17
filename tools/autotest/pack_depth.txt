@@ -1,0 +1,17 @@
+newworld DepthTest 4242
+wait 200
+cmd time set noon
+fly
+cmd tp @s 85 46 0 90 15
+wait 60
+shot depth_17
+cmd tp @s 95 38 0 90 20
+wait 60
+shot depth_25a
+wait 9
+shot depth_25b
+cmd tp @s 160 33 0 90 30
+wait 60
+shot depth_30
+log depth-ok
+quit
