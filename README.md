@@ -93,6 +93,12 @@ Underwater, the deeper you are the darker it gets: the fog closes in and turns b
 
 Rebuild: `cd modpack && python resolve.py mods.txt resolved.json && python build.py resolved.json ../dist/tidebound-1.21.1-neoforge-1.0.0.jar ../dist/Tidebound-1.0.0.mrpack cache`. Let it Walk! and Sable Photomancy are left out because they (or LDLib2) aren't on Modrinth.
 
+## Updates
+
+Tidebound updates itself. At startup it checks the latest release on [GitHub](https://github.com/EEEEE213/tidebound/releases); if it's newer, it downloads the jar into your mods folder and tells you in chat. The new version runs from your next launch. To turn it off, set `enabled=false` in `config/tidebound-updater.properties`.
+
+Publishing an update: `sh tools/release.sh <version> "notes"` (bumps the version, builds, commits, tags, pushes and creates the GitHub release with the jar and the .mrpack).
+
 ## Commands
 
 - `/tidebound island`: the nearest island, its guardian, and whether it's freed
