@@ -550,6 +550,132 @@ def connect(world):
     return out
 
 
+# ---------------------------------------------------------------- one piece
+# Sable treats blocks that don't touch the rest of the ship face to face as separate bodies: when a block is
+# removed, anything left hanging splits off and falls. So every stage must leave the ship in ONE face-connected
+# piece. Loose groups (sail bellies offset from their edges, stair-stepped ropes, the bilge's diagonal steps...)
+# get a bridging block, lowest spot first so walkways stay clear.
+from collections import deque
+
+NB = ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1))
+
+
+def pieces(world):
+    seen, out = set(), []
+    for c in world:
+        if c in seen:
+            continue
+        q, comp = deque([c]), {c}
+        seen.add(c)
+        while q:
+            x, y, z = q.popleft()
+            for dx, dy, dz in NB:
+                n = (x + dx, y + dy, z + dz)
+                if n in world and n not in seen:
+                    seen.add(n)
+                    comp.add(n)
+                    q.append(n)
+        out.append(comp)
+    return out
+
+
+def bridge_block(state):
+    name = state.split("[")[0]
+    wood = name.split(":")[1]
+    for suffix in ("_stairs", "_slab"):
+        if wood.endswith(suffix):
+            w = wood[: -len(suffix)]
+            return "minecraft:" + (w + "_planks" if w in ("oak", "spruce", "dark_oak", "birch") else w.replace("_brick", "_bricks"))
+    if "bed" in wood or "door" in wood or "lantern" in wood or "trapdoor" in wood or "anvil" in wood:
+        return HULL
+    return name
+
+
+def make_one_piece(world, add):
+    """Bridge every loose group to the piece holding the core. Bridges go into `add` (the current stage)."""
+    for _ in range(400):
+        comps = pieces(world)
+        main = next(c for c in comps if CORE in c)
+        loose = [c for c in comps if c is not main]
+        if not loose:
+            return 0
+        progress = False
+        for comp in loose:
+            # empty cells touching both this group and the rest of the ship
+            best = None
+            for (x, y, z) in comp:
+                for dx, dy, dz in NB:
+                    e = (x + dx, y + dy, z + dz)
+                    if e in world:
+                        continue
+                    if any((e[0] + a, e[1] + b, e[2] + c) in main for a, b, c in NB):
+                        key = (e[1], abs(e[0]) + abs(e[2] - CORE[2]))
+                        if best is None or key < best[0]:
+                            best = (key, e, (x, y, z))
+            if best:
+                _, e, src = best
+                st = bridge_block(world[src])
+                world[e] = st
+                add[e] = st
+                progress = True
+                break  # recompute the pieces
+        if not progress:
+            for c in loose:
+                print("  loose:", sorted((k, world[k]) for k in c)[:6])
+            return sum(len(c) for c in loose)
+    return -1
+
+
+def bfs_depth(union):
+    depth, q = {CORE: 0}, deque([CORE])
+    while q:
+        c = q.popleft()
+        for dx, dy, dz in NB:
+            n = (c[0] + dx, c[1] + dy, c[2] + dz)
+            if n in union and n not in depth:
+                depth[n] = depth[c] + 1
+                q.append(n)
+    return depth
+
+
+def removal_order(union, removed):
+    """Remove blocks deepest-first (by distance from the core through the ship) so nothing is cut loose midway."""
+    depth, q = {CORE: 0}, deque([CORE])
+    while q:
+        c = q.popleft()
+        for dx, dy, dz in NB:
+            n = (c[0] + dx, c[1] + dy, c[2] + dz)
+            if n in union and n not in depth:
+                depth[n] = depth[c] + 1
+                q.append(n)
+    return sorted(removed, key=lambda k: -depth.get(k, 10 ** 6))
+
+
+world_now = {CORE: "tidebound:ship_core[facing=north]"}
+removal_orders = {}
+place_depth = {}
+for s_ in STAGES:
+    if s_ == "galleon":  # the galleon replaces everything premade it doesn't reuse, bridges included
+        for k in list(world_now):
+            if k not in bp[s_] and k != CORE:
+                bp[s_][k] = "minecraft:air"
+    before_stage = dict(world_now)
+    for k, v in bp[s_].items():
+        if v == "minecraft:air":
+            world_now.pop(k, None)
+        else:
+            world_now[k] = v
+    world_now[CORE] = "tidebound:ship_core[facing=north]"
+    left = make_one_piece(world_now, bp[s_])
+    if left:
+        raise SystemExit(f"stage {s_}: {left} blocks could not be connected to the ship")
+    # orders computed with the bridges in: placements grow out from the core, removals go deepest-first
+    union = dict(before_stage)
+    union.update({k: v for k, v in bp[s_].items() if v != "minecraft:air"})
+    removed = [k for k, v in bp[s_].items() if v == "minecraft:air" and k in before_stage]
+    removal_orders[s_] = removal_order(union, removed)
+    place_depth[s_] = bfs_depth(union)
+
 # ---------------------------------------------------------------- write
 os.makedirs(OUT, exist_ok=True)
 last_shaped = {}
@@ -568,7 +694,12 @@ for i, s in enumerate(STAGES):
             retired[j] = (k, last_shaped[k], s0, s1)
     last_shaped = shaped_at
 for s in STAGES:
-    blocks = [[r, y, f, st] for (r, y, f), st in sorted(bp[s].items())]
+    placed = [(k, v) for k, v in bp[s].items() if v != "minecraft:air"]
+    # each block goes in touching one already there: growing out from the core through the ship
+    dep = place_depth.get(s, {})
+    placed.sort(key=lambda kv: dep.get(kv[0], 10 ** 6))
+    blocks = [[r, y, f, st] for (r, y, f), st in placed]
+    blocks += [[r, y, f, "minecraft:air"] for (r, y, f) in removal_orders[s]]
     with open(os.path.join(OUT, s + ".json"), "w") as fh:
         json.dump({"stage": s, "blocks": blocks}, fh, separators=(",", ":"))
 

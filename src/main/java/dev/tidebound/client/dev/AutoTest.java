@@ -14,6 +14,7 @@ import net.minecraft.client.Screenshot;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.TitleScreen;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
@@ -288,6 +289,19 @@ public final class AutoTest {
                 mc.disconnect();
                 mc.setScreen(new TitleScreen());
                 waiting = 60;
+            }
+            case "bodies" -> {
+                // how many Sable bodies the integrated server has (a split ship shows up as more)
+                var server = mc.getSingleplayerServer();
+                server.execute(() -> LOG.info("[autotest] bodies {}: {}", arg,
+                        dev.ryanhcode.sable.api.sublevel.SubLevelContainer.getContainer(server.overworld()).getAllSubLevels().size()));
+            }
+            case "breakcore" -> {
+                // break a ship block like a player (setblock ... destroy), offset from the last core opened
+                String[] p = arg.split("\s+");
+                BlockPos b = lastCore.offset(Integer.parseInt(p[0]), Integer.parseInt(p[1]), Integer.parseInt(p[2]));
+                mc.player.connection.sendCommand(String.format("setblock %d %d %d air destroy", b.getX(), b.getY(), b.getZ()));
+                waiting = 2;
             }
             case "connect" -> {
                 // join a server as a remote player: connect host:port

@@ -25,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 /** Building ships: launching the starter raft, assembling a player-built ship, installing upgrades. */
 public final class ShipBuilder {
-    public static final int MAX_SHIP_BLOCKS = 8000;
+    public static final int MAX_SHIP_BLOCKS = 20000;
 
     private ShipBuilder() {
     }
@@ -166,7 +166,9 @@ public final class ShipBuilder {
         BlockPos corePos = core.anchor();  // layouts stay put even if the core was moved
         Direction facing = core.shipFacing();
         List<Map.Entry<BlockPos, BlockState>> blocks = new ArrayList<>(upgrade.blueprint().placed(corePos, facing));
-        blocks.sort(Comparator.comparingDouble(e -> e.getKey().distSqr(corePos)));
+        // New blocks first (the blueprint lists them growing out from the core), then removals deepest-first, so
+        // the ship is one connected piece at every step and Sable never splits a part off mid-build.
+        blocks.sort(Comparator.comparingInt(e -> e.getValue().isAir() ? 1 : 0));
         SubLevel sub = subLevelOf(level, corePos);
         // Blocks the raft or another upgrade put there, still untouched, may be rebuilt; anything else is the player's.
         Map<BlockPos, BlockState> premade = new java.util.HashMap<>();

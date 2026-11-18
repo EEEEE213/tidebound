@@ -90,8 +90,14 @@ public final class TideboundGameTests {
         double[] maxTilt = {0};
         int[] t = {0};
         StringBuilder report = new StringBuilder();
+        int[] splitCheck = {-1};
 
         h.onEachTick(() -> {
+            if (t[0] + 1 == splitCheck[0]) {
+                int bodies = shipsOver(level, top, 220, 460);
+                report.append(String.format("bodies after the big build: %d; ", bodies));
+                if (bodies != 1) h.fail("the ship split into " + bodies + " pieces after building every upgrade");
+            }
             t[0]++;
             if (core[0] == null) {
                 for (var be : ship.getPlot().getBlockEntityActors()) {
@@ -144,6 +150,7 @@ public final class TideboundGameTests {
                     c.install(u);
                 }
                 report.append(String.format("all upgrades: %d blocks built; ", blocks));
+                splitCheck[0] = t[0] + 100;
                 if (blocks < 2000) h.fail("upgrades built too few blocks: " + blocks);
             }
             if (t[0] == 460) {
@@ -272,6 +279,16 @@ public final class TideboundGameTests {
         });
     }
 
+    /** Sable bodies over a test pool: a ship that split into pieces shows up as more than one. */
+    private static int shipsOver(ServerLevel level, BlockPos poolTop, int sizeX, int sizeZ) {
+        var box = new dev.ryanhcode.sable.companion.math.BoundingBox3d(new net.minecraft.world.phys.AABB(
+                poolTop.getX() - sizeX / 2.0 - 4, poolTop.getY() - 40, poolTop.getZ() - 25,
+                poolTop.getX() + sizeX / 2.0 + 4, poolTop.getY() + 120, poolTop.getZ() + sizeZ + 4));
+        int n = 0;
+        for (var sub : dev.ryanhcode.sable.api.sublevel.SubLevelContainer.getContainer(level).queryIntersecting(box)) n++;
+        return n;
+    }
+
     private static String fmt(double v) {
         return String.format("%.2f", v);
     }
@@ -393,6 +410,47 @@ public final class TideboundGameTests {
         });
     }
 
+    /** Sanity check that Sable splitting is live here: cut a tail off a small launched platform. */
+    @GameTest(template = "empty", timeoutTicks = 400)
+    public static void sableSplitsCutOffParts(GameTestHelper h) {
+        ServerLevel level = h.getLevel();
+        BlockPos top = pool(level, 90 * 96, 40, 60);
+        BlockPos deck = top.above().south(20);
+        for (int dx = -1; dx <= 1; dx++) for (int dz = -1; dz <= 1; dz++) level.setBlock(deck.offset(dx, 0, dz), Blocks.OAK_PLANKS.defaultBlockState(), 3);
+        for (int i = 2; i <= 4; i++) level.setBlock(deck.east(i), Blocks.OAK_PLANKS.defaultBlockState(), 3);
+        level.setBlock(deck.above(), Tidebound.SHIP_CORE.get().defaultBlockState(), 3);
+        ServerSubLevel ship = ShipBuilder.launchFromCore(level, deck.above(), new ArrayList<>());
+        if (ship == null) {
+            h.fail("launch failed");
+            return;
+        }
+        int[] t = {0};
+        h.onEachTick(() -> {
+            t[0]++;
+            if (t[0] == 40) {
+                BlockPos mid = null;
+                var box = ship.getPlot().getBoundingBox();
+                BlockPos.MutableBlockPos p = new BlockPos.MutableBlockPos();
+                // the tail is the run of planks east of the 3x3: break its middle block
+                for (int x = box.maxX(); x >= box.minX() && mid == null; x--)
+                    for (int z = box.minZ(); z <= box.maxZ() && mid == null; z++)
+                        for (int y = box.minY(); y <= box.maxY(); y++)
+                            if (!level.getBlockState(p.set(x, y, z)).isAir()) {
+                                mid = p.immutable().west();
+                                break;
+                            }
+                LOG.info("[tidebound-test] split check: breaking {} ({})", mid, level.getBlockState(mid));
+                level.destroyBlock(mid, false);
+            }
+            if (t[0] == 300) {
+                int n = shipsOver(level, top, 40, 60);
+                LOG.info("[tidebound-test] split check: {} bodies after cutting the tail", n);
+                if (n == 2) h.succeed();
+                else h.fail("expected the cut-off plank to split into its own body, got " + n + " bodies");
+            }
+        });
+    }
+
     /** Launching a hull that sits on a bubble column must not drag the column (or the magma under it) along. */
     @GameTest(template = "empty", timeoutTicks = 200)
     public static void launchLeavesTheSeaBehind(GameTestHelper h) {
@@ -428,7 +486,7 @@ public final class TideboundGameTests {
     }
 
     /** After every upgrade the lower deck floor must stay above the water (heavy upgrades used to sink it). */
-    @GameTest(template = "empty", timeoutTicks = 2600)
+    @GameTest(template = "empty", timeoutTicks = 4000)
     public static void lowerDeckStaysDry(GameTestHelper h) {
         ServerLevel level = h.getLevel();
         BlockPos top = pool(level, 84 * 96, 110, 200);
@@ -442,6 +500,7 @@ public final class TideboundGameTests {
         int[] t = {0};
         StringBuilder report = new StringBuilder();
         double[] worst = {99};
+        int[] pieces = {1};
         h.onEachTick(() -> {
             t[0]++;
             if (core[0] == null) {
@@ -460,13 +519,28 @@ public final class TideboundGameTests {
                 double coreAbove = ShipBuilder.worldCenter(level, c.getBlockPos()).y - surface;
                 double floorClear = coreAbove - (c.has(ShipUpgrade.GALLEON) ? 8.5 : 3.5);
                 double mass = ship.getMassTracker().getMass();
-                report.append(String.format("%s: floor %.2f above water (mass %.0f, buoyancy x%.2f); ", all[step - 1].id, floorClear, mass, c.buoyancyScale(mass)));
+                int bodies = shipsOver(level, top, 110, 200);
+                report.append(String.format("%s: floor %.2f above water (mass %.0f, buoyancy x%.2f, %d bod%s); ", all[step - 1].id, floorClear, mass,
+                        c.buoyancyScale(mass), bodies, bodies == 1 ? "y" : "ies"));
                 worst[0] = Math.min(worst[0], floorClear);
+                if (bodies != 1) pieces[0] = Math.max(pieces[0], bodies);
             }
-            if (t[0] == 200 * (ShipUpgrade.values().length + 1)) {
+            if (t[0] == 200 * (ShipUpgrade.values().length + 1) + 100) {
+                // break a deck plank like a player would: Sable re-checks the ship's connectivity
+                BlockPos plank = dev.tidebound.ship.Blueprint.rel(3, 0, -5).rotate(dev.tidebound.ship.Blueprint.rotationFor(c.shipFacing())).offset(c.anchor());
+                LOG.info("[tidebound-test] breaking {} ({})", plank, level.getBlockState(plank));
+                level.destroyBlock(plank, false);
+                for (int y = 0; y < 3; y++) level.destroyBlock(plank.above(30 + y), false);
+            }
+            if (t[0] == 200 * (ShipUpgrade.values().length + 1) + 1200) {
+                // Sable's split check (a heat-map flood fill) can take many seconds after a big rebuild
+                int later = shipsOver(level, top, 110, 200);
+                report.append(String.format("a minute later: %d bod%s", later, later == 1 ? "y" : "ies"));
+                if (later != 1) pieces[0] = Math.max(pieces[0], later);
                 LOG.info("[tidebound-test] DRY {} | server tick {} ms, hull cells {}", report,
                         String.format("%.1f", level.getServer().getAverageTickTimeNanos() / 1e6), c.hullCells().length / 3);
-                if (worst[0] < 0.3) h.fail("lower deck floods: floor only " + worst[0] + " above water");
+                if (pieces[0] > 1) h.fail("the ship split into " + pieces[0] + " pieces");
+                else if (worst[0] < 0.3) h.fail("lower deck floods: floor only " + worst[0] + " above water");
                 else h.succeed();
             }
         });

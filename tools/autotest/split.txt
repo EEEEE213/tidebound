@@ -1,0 +1,57 @@
+newworld SplitTest 4242
+wait 200
+cmd time set noon
+cmd tp @s 0 66 180
+fly
+look 180 80
+wait 100
+useitem
+wait 60
+aimcore
+corescreen
+wait 10
+click Install
+wait 30
+click Install
+wait 30
+click Install
+wait 30
+click Install
+wait 30
+click Install
+wait 30
+click Install
+wait 30
+click Install
+wait 30
+click Install
+wait 30
+click Install
+wait 30
+click Install
+wait 60
+close
+wait 300
+bodies after-build
+tpcore 0 1 0 180 30
+wait 40
+leave
+openworld SplitTest
+wait 300
+bodies after-reload
+aimcore
+breakcore 3 -1 3
+breakcore 2 -1 10
+breakcore -3 -1 -4
+wait 600
+bodies after-breaks
+aimcore
+corescreen
+wait 10
+shot split_core_screen
+close
+tpcore 48 22 -30 56 18
+fly
+wait 60
+shot split_exterior
+quit

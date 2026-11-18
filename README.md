@@ -38,7 +38,7 @@ Requires **Sable 2.0.x** (NeoForge 1.21.1). Works alongside Create, Let it Walk!
 ## Ships
 
 - **Ship Core** used on open water builds a 7x11 raft with the core on it, already floating.
-- Or place the core on your own hull (built on water or on a slipway) and press **Launch Ship** in the core screen. Everything connected to it, except terrain, becomes the ship (max 8000 blocks).
+- Or place the core on your own hull (built on water or on a slipway) and press **Launch Ship** in the core screen. Everything connected to it, except terrain, becomes the ship (max 20000 blocks).
 - It's a real Sable rigid body. You can walk on it, **place and break blocks on it while it sails**, put chests and machines on it, and bring a Let it Walk! mech aboard.
 - **Buoyancy** comes from the hull envelope: every column from its lowest to its highest block displaces water, so enclosed air floats a ship like a real boat. Heavy builds sit deeper. Water drag, a keel-direction resistance and a stabiliser keep it upright.
 - The starter raft needs at least 4 blocks of water under it, so launch it away from the beach. A ship that runs aground tells you so at the helm; back off with S.
